@@ -1,0 +1,18 @@
+{
+	"containerPort": 80,                            // 监听端口。需要和helloworld.go中保持一致。
+	"minNum": 0,                                    // 实例副本数最小值。若为0，则连续半小时无访问会暂停，不再计费，次有访问时冷启动；若大于0，则无论是否有访问，都会持续运行并计费。
+	"maxNum": 50,                                   // 实例副本数最大值
+	"cpu": 0.25,                                    // 容器规格-CPU大小
+	"mem": 0.5,                                     // 容器规格-内存大小
+	"policyType": "cpu",                            // 扩缩容条件：CPU使用率
+	"policyThreshold": 60,                          // 扩缩容条件：使用率超过60%触发
+	"envParams": {},                                // 环境变量。可以有多个。
+	"customLogs": "stdout",                         // 日志采集路径
+	"initialDelaySeconds": 2,                        // 容器启动后延迟多久开始健康检查。默认值2秒。
+	"dataBaseName":"springboot_demo",
+	"executeSQLs":[
+		"CREATE DATABASE springboot_demo;",
+		"USE springboot_demo;",
+		"create table user(id int(32) primary key AUTO_INCREMENT,name varchar(64) not null default '',age int(16) not null default 0,email varchar(32) not null default '',phone varchar(32) not null default '',description varchar(64) default '',create_time timestamp default CURRENT_TIMESTAMP ,update_time timestamp default CURRENT_TIMESTAMP) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;"
+	]
+}

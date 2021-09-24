@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.cloudbaserun.dao.UserMapper">
+
+    <resultMap id="userMapping" type="com.tencent.cloudbaserun.model.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time" javaType="java.time.LocalDateTime" />
+        <result property="updateTime" column="update_time" javaType="java.time.LocalDateTime"  />
+    </resultMap>
+
+    <insert id="insert"
+            parameterType="com.tencent.cloudbaserun.model.User"
+            useGeneratedKeys="true"
+            keyProperty="id"
+    >
+        INSERT INTO `user`(`name`, `age`, `email`, `phone`, `description`)
+        VALUES (#{name}, #{age}, #{email}, #{phone}, #{description})
+    </insert>
+
+
+    <select id="queryById" resultMap="userMapping" parameterType="java.lang.Integer">
+        SELECT `id`, `name`, `age`, `email`, `phone`, `description`,`create_time`,`update_time`
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE
+        FROM user
+        where id = #{id}
+        limit 1
+    </delete>
+
+    <update id="update" parameterType="com.tencent.cloudbaserun.model.User">
+        UPDATE user
+        SET name=#{name},
+            age=#{age},
+            email=#{email},
+            phone=#{phone},
+            description=#{description}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
