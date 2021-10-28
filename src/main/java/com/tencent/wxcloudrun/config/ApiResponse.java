@@ -1,4 +1,4 @@
-package com.tencent.cloudbaserun.config;
+package com.tencent.wxcloudrun.config;
 
 import lombok.Data;
 

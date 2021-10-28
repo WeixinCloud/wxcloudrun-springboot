@@ -1,9 +1,10 @@
-package com.tencent.cloudbaserun.dto;
+package com.tencent.wxcloudrun.dto;
 
 import lombok.Data;
 
 @Data
-public class CreateUserRequest {
+public class UpdateUserRequest {
+
   private String name;
 
   private Integer age;

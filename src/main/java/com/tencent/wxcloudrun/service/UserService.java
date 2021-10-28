@@ -1,6 +1,6 @@
-package com.tencent.cloudbaserun.service;
+package com.tencent.wxcloudrun.service;
 
-import com.tencent.cloudbaserun.model.User;
+import com.tencent.wxcloudrun.model.User;
 
 import java.util.Optional;
 

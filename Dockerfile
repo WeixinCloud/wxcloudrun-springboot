@@ -21,7 +21,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # 将构建产物jar包拷贝到运行时目录中
-COPY --from=build /app/target/springboot-cloudbaserun-1.0.jar .
+COPY --from=build /app/target/springboot-wxcloudrun-1.0.jar .
 
 # 执行启动命令
 ENTRYPOINT ["java","-jar","/app/springboot-cloudbaserun-1.0.jar"]

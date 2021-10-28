@@ -1,6 +1,6 @@
-package com.tencent.cloudbaserun.dao;
+package com.tencent.wxcloudrun.dao;
 
-import com.tencent.cloudbaserun.model.User;
+import com.tencent.wxcloudrun.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

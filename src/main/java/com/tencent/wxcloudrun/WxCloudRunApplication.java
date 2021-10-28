@@ -1,14 +1,14 @@
-package com.tencent.cloudbaserun;
+package com.tencent.wxcloudrun;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.tencent.cloudbaserun.dao"})
-public class CloudbaserunApplication {
+@MapperScan(basePackages = {"com.tencent.wxcloudrun.dao"})
+public class WxCloudRunApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(CloudbaserunApplication.class, args);
+    SpringApplication.run(WxCloudRunApplication.class, args);
   }
 }

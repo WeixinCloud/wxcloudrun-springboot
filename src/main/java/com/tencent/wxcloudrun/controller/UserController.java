@@ -1,10 +1,10 @@
-package com.tencent.cloudbaserun.controller;
+package com.tencent.wxcloudrun.controller;
 
-import com.tencent.cloudbaserun.config.ApiResponse;
-import com.tencent.cloudbaserun.dto.CreateUserRequest;
-import com.tencent.cloudbaserun.dto.UpdateUserRequest;
-import com.tencent.cloudbaserun.model.User;
-import com.tencent.cloudbaserun.service.UserService;
+import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.dto.CreateUserRequest;
+import com.tencent.wxcloudrun.dto.UpdateUserRequest;
+import com.tencent.wxcloudrun.model.User;
+import com.tencent.wxcloudrun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
