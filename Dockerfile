@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=build /app/target/springboot-wxcloudrun-1.0.jar .
 
 # 执行启动命令
-ENTRYPOINT ["java","-jar","/app/springboot-cloudbaserun-1.0.jar"]
+ENTRYPOINT ["java","-jar","/app/springboot-wxcloudrun-1.0.jar"]
