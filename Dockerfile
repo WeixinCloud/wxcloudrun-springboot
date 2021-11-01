@@ -17,6 +17,10 @@ RUN mvn -f /app/pom.xml clean package
 # 选择运行时基础镜像。（JAVA语言选择原则：业务所需openjdk版本中，尽可用选体积小的）
 FROM openjdk:11-jre-slim
 
+ENV MYSQL_ADDRESS=sh-cynosdbmysql-grp-7d7j0b5e.sql.tencentcdb.com:27592
+ENV MYSQL_USERNAME=biz
+ENV MYSQL_PASSWORD=121101mxf!
+
 # 指定运行时的工作目录
 WORKDIR /app
 
@@ -24,4 +28,7 @@ WORKDIR /app
 COPY --from=build /app/target/springboot-wxcloudrun-1.0.jar .
 
 # 执行启动命令
-ENTRYPOINT ["java","-jar","/app/springboot-cloudbaserun-1.0.jar"]
+ENTRYPOINT ["java","-jar","/app/springboot-wxcloudrun-1.0.jar"]
+
+# 暴露端口
+EXPOSE 80
