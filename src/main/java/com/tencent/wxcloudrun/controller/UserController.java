@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -37,19 +38,38 @@ public class UserController {
 
   @DeleteMapping("/{id}")
   ApiResponse delete(@PathVariable Integer id) {
+    Optional<User> user = userService.getUserById(id);
+    if (!user.isPresent()) {
+      ApiResponse rsp = ApiResponse.error("user not exist");
+      rsp.setCode(10000);
+      return rsp;
+    }
     return userService.removeById(id) ? ApiResponse.ok() : ApiResponse.error("删除失败");
   }
 
   @GetMapping("/{id}")
   ApiResponse get(@PathVariable Integer id) {
-    User user = userService.getUserById(id).orElse(new User());
-    return ApiResponse.ok(user);
+    Optional<User> user = userService.getUserById(id);
+    if (user.isPresent()) {
+      return ApiResponse.ok(user);
+    }
+
+    ApiResponse rsp = ApiResponse.error("user not exist");
+    rsp.setCode(10000);
+    return rsp;
   }
 
-  @PutMapping
-  ApiResponse update(@RequestBody UpdateUserRequest request) {
+  @PutMapping("/{id}")
+  ApiResponse update(@PathVariable Integer id, @RequestBody UpdateUserRequest request) {
+    Optional<User> queryUser = userService.getUserById(id);
+    if (!queryUser.isPresent()) {
+      ApiResponse rsp = ApiResponse.error("user not exist");
+      rsp.setCode(10000);
+      return rsp;
+    }
 
     User user = new User();
+    user.setId(id);
     user.setAge(request.getAge());
     user.setName(request.getName());
     user.setEmail(request.getEmail());
