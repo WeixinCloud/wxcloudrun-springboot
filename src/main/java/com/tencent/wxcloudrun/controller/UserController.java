@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * 用户控制器
+ */
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -21,6 +24,11 @@ public class UserController {
     this.userService = userService;
   }
 
+  /**
+   * 创建用户
+   * @param request {@link CreateUserRequest}
+   * @return API response json
+   */
   @PostMapping
   ApiResponse create(@RequestBody CreateUserRequest request) {
 
@@ -36,6 +44,11 @@ public class UserController {
     return userService.create(user) ? ApiResponse.ok() : ApiResponse.error("创建用户失败");
   }
 
+  /**
+   * 根据ID删除用户
+   * @param id 用户ID
+   * @return API response json
+   */
   @DeleteMapping("/{id}")
   ApiResponse delete(@PathVariable Integer id) {
     Optional<User> user = userService.getUserById(id);
@@ -47,6 +60,11 @@ public class UserController {
     return userService.removeById(id) ? ApiResponse.ok() : ApiResponse.error("删除失败");
   }
 
+  /**
+   * 根据用户ID查询用户
+   * @param id 用户ID
+   * @return API response json
+   */
   @GetMapping("/{id}")
   ApiResponse get(@PathVariable Integer id) {
     Optional<User> user = userService.getUserById(id);
@@ -59,6 +77,11 @@ public class UserController {
     return rsp;
   }
 
+  /**
+   * @param id 根据用户ID查询用户
+   * @param request {@link UpdateUserRequest}
+   * @return API response json
+   */
   @PutMapping("/{id}")
   ApiResponse update(@PathVariable Integer id, @RequestBody UpdateUserRequest request) {
     Optional<User> queryUser = userService.getUserById(id);
