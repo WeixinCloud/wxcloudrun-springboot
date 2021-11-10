@@ -6,19 +6,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class User implements Serializable {
+public class ToDo implements Serializable {
 
   private Integer id;
 
-  private String name;
+  private String title;
 
-  private Integer age;
-
-  private String email;
-
-  private String phone;
-
-  private String description;
+  private String status;
 
   private LocalDateTime createTime;
 

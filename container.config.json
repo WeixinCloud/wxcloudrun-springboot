@@ -12,6 +12,6 @@
 	"executeSQLs":[
 		"CREATE DATABASE springboot_demo;",
 		"USE springboot_demo;",
-		"create table user(id int(32) primary key AUTO_INCREMENT,name varchar(64) not null default '',age int(16) not null default 0,email varchar(32) not null default '',phone varchar(32) not null default '',description varchar(64) default '',create_time timestamp default CURRENT_TIMESTAMP ,update_time timestamp default CURRENT_TIMESTAMP) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;"
+		"CREATE TABLE `todo_list` (`id` int(32) NOT NULL AUTO_INCREMENT, `title` varchar(256) NOT NULL DEFAULT '', `status` varchar(64) NOT NULL DEFAULT '', `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 	]                                               // 数据库初始化执行命令
 }
