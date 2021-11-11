@@ -16,6 +16,7 @@ public final class ApiResponse {
     this.errorMsg = errorMsg;
     this.data = data;
   }
+  
   public static ApiResponse ok() {
     return new ApiResponse(0, "", new HashMap<>());
   }

@@ -6,7 +6,17 @@ import com.tencent.wxcloudrun.dto.UpdateToDoRequest;
 import com.tencent.wxcloudrun.model.ToDo;
 import com.tencent.wxcloudrun.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
+
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -92,6 +102,7 @@ public class ToDoController {
   }
 
   /**
+   * 根据todoID todo
    * @param request {@link UpdateToDoRequest}
    * @return API response json
    */
@@ -103,16 +114,6 @@ public class ToDoController {
       rsp.setCode(-1);
       return rsp;
     }
-
-    // ToDo qTodo = queryToDo.get();
-    // String title = request.getTitle();
-    // if (title == null) {
-    //   title = qTodo.getTitle();
-    // }
-    // String status = request.getStatus();
-    // if (status == null) {
-    //   status = qTodo.getStatus();
-    // }
 
     ToDo todo = new ToDo();
     todo.setId(request.getId());

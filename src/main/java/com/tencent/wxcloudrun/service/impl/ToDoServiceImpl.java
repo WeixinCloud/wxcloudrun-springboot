@@ -12,35 +12,35 @@ import java.util.List;
 @Service
 public class ToDoServiceImpl implements ToDoService {
 
-  final ToDoMapper ToDoMapper;
+  final ToDoMapper toDoMapper;
 
-  public ToDoServiceImpl(@Autowired ToDoMapper ToDoMapper) {
-    this.ToDoMapper = ToDoMapper;
+  public ToDoServiceImpl(@Autowired ToDoMapper toDoMapper) {
+    this.toDoMapper = toDoMapper;
   }
 
   @Override
   public Optional<List<ToDo>> getAll() {
-    return Optional.ofNullable(ToDoMapper.queryAll());
+    return Optional.ofNullable(toDoMapper.queryAll());
   }
 
   @Override
   public Optional<ToDo> getById(Integer id) {
-    return Optional.ofNullable(ToDoMapper.queryById(id));
+    return Optional.ofNullable(toDoMapper.queryById(id));
   }
 
   @Override
   public Boolean removeById(Integer id) {
-    Integer effectedRows = ToDoMapper.delete(id);
+    Integer effectedRows = toDoMapper.delete(id);
     return effectedRows == 1;
   }
 
   @Override
   public Boolean updateById(ToDo todo) {
-    return ToDoMapper.update(todo) == 1;
+    return toDoMapper.update(todo) == 1;
   }
 
   @Override
   public Boolean create(ToDo todo) {
-    return ToDoMapper.insert(todo) == 1;
+    return toDoMapper.insert(todo) == 1;
   }
 }
