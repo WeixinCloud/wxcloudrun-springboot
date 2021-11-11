@@ -10,8 +10,8 @@
 	"customLogs": "stdout",                         // 日志采集路径，只有此路径下的日志会显示在微信云托管控制台“日志”界面中
 	"dataBaseName":"springboot_demo",               // 创建的数据库表的名称
 	"executeSQLs":[
-		"CREATE DATABASE springboot_demo;",
+		"CREATE DATABASE IF NOT EXISTS springboot_demo;",
 		"USE springboot_demo;",
-		"CREATE TABLE `todo_list` (`id` int(32) NOT NULL AUTO_INCREMENT, `title` varchar(256) NOT NULL DEFAULT '', `status` varchar(64) NOT NULL DEFAULT '', `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+		"CREATE TABLE IF NOT EXISTS `todo_list` (`id` int(32) NOT NULL AUTO_INCREMENT, `title` varchar(256) NOT NULL DEFAULT '', `status` varchar(64) NOT NULL DEFAULT '', `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 	]                                               // 数据库初始化执行命令
 }
