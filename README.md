@@ -92,7 +92,14 @@ curl http://{ip}:{port}/api/todos \
 ```
 {
 	"code": 0,
-	"errorMsg": ""
+	"errorMsg": "",
+	"data": {
+		"id": 1,
+		"title": "工作1",
+		"status": "准备中",
+		"create_time": "2021-11-09T08:45:40Z",
+		"update_time": "2021-11-09T08:45:40Z"
+	}
 }
 ```
 
