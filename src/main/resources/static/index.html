@@ -100,9 +100,11 @@
     function set(action) {
       $.ajax("/api/count", {
         method: "POST",
-        data: {
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
           action: action,
-        },
+        }),
       }).done(function (res) {
         if (res && res.data !== undefined) {
           $(".count-number").html(res.data);
