@@ -24,8 +24,8 @@ public class CounterServiceImpl implements CounterService {
   }
 
   @Override
-  public void upsertCount(Counter Counter) {
-    countersMapper.upsertCount(Counter);
+  public void upsertCount(Counter counter) {
+    countersMapper.upsertCount(counter);
   }
 
   @Override
