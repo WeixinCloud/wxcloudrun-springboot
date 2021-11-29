@@ -14,7 +14,7 @@ COPY pom.xml /app
 # 执行代码编译命令
 RUN mvn -f /app/pom.xml clean package
 
-# 选择运行时基础镜像。（JAVA语言选择原则：业务所需openjdk版本中，尽可用选体积小的）
+# 选择运行时基础镜像。（JAVA语言基础镜像选择原则：业务所需openjdk版本中，尽可能用选体积小的）
 FROM openjdk:8u111-jre-alpine
 
 # 指定运行时的工作目录
