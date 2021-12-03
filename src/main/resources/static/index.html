@@ -24,16 +24,25 @@
         margin-top: 100px;
       }
       .count-button {
-        margin: 20px 0;
-        margin: 10px;
+        width: 132px;
+        box-sizing: border-box;
+        margin: 16px 8px;
       }
       .count-number {
-        font-size: 28px;
+        font-size: 18px;
         font-weight: bolder;
         margin: 0 8px;
       }
       .count-text {
-        margin-bottom: 80px;
+        width: 280px;
+        display: flex;
+        margin: 0 auto;
+        text-align: left;
+        height: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        line-height: 40px;
+        padding: 0 12px;
       }
       .quote {
         font-size: 12px;
@@ -47,6 +56,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
       }
     </style>
   </head>
@@ -58,25 +68,32 @@
           class="title-logo"
           src="https://static-index-4gtuqm3bfa95c963-1304825656.tcloudbaseapp.com/official-website/favicon.svg"
         />
-        <h1 style="display: inline">欢迎使用微信云托管</h1>
+        <h1 style="display: inline; margin-bottom: 48px;">欢迎使用微信云托管</h1>
       </div>
       <div style="text-align: center">
-        <div style="display: flex; justify-content: center">
-          <a class="btn btn-success btn-lg count-button" onclick="set('inc')"
+        <p class="count-text">当前计数：<span class="count-number"></span></p>
+        <div
+          style="display: flex; justify-content: center; margin-bottom: 80px"
+        >
+          <a class="btn btn-success btn-lg count-button" style="background: #07C160; border: 0;" onclick="set('inc')"
             >计数+1</a
           >
           <a
             class="btn btn-outline-success btn-lg count-button"
+            style="background: rgba(0,0,0,0.03); color: #07C160; border: 0;"
             onclick="set('clear')"
             >清零</a
           >
         </div>
-        <p class="count-text">当前计数：<span class="count-number"></span></p>
+        <small
+          class="text-black-50"
+          style="display: flex; justify-content: center; margin-bottom: 16px"
+          >扫码加入微信云托管用户群</small
+        >
         <img
           class="qrcode middle"
           src="https://qcloudimg.tencent-cloud.cn/raw/89b46988d3cd73d8a56e76a1b82bb377.png"
         />
-        <small class="text-black-50">扫码加入微信云托管用户群</small>
       </div>
     </div>
   </body>
