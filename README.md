@@ -22,6 +22,7 @@
 ├── mvnw                            mvnw 文件，处理mevan版本兼容问题
 ├── mvnw.cmd                        mvnw.cmd 文件，处理mevan版本兼容问题
 ├── pom.xml                         pom.xml文件
+├── settings.xml                    maven 配置文件
 ├── springboot-cloudbaserun.iml     项目配置文件
 └── src                             源码目录
     └── main                        源码主目录
