@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.UserinfoMapper">
+
+
+    <delete id="clearUser" parameterType="java.lang.String">
+        DELETE
+        FROM Counters
+        where id = #{id}
+        limit 1
+    </delete>
+
+    <update id="upsertUser" parameterType="com.tencent.wxcloudrun.model.Userinfo">
+        INSERT INTO `Userinfo`(`id`,`sex`,`location`)
+        VALUE(#{id}, #{sex}, #{location})
+        ON DUPLICATE KEY UPDATE sex=#{sex},location=#{location}
+    </update>
+
+    <update id="upsertUserEmotion" parameterType="com.tencent.wxcloudrun.model.Userinfo">
+        INSERT INTO `Userinfo`(`id`,`emotion`)
+        VALUE(#{id}, #{emotion})
+        ON DUPLICATE KEY UPDATE emotion=#{emotion}
+    </update>
+
+</mapper>
