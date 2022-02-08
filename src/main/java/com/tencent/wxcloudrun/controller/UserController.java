@@ -23,54 +23,58 @@ import java.util.Optional;
 
 public class UserController {
 
-  final UserinfoService userinfoService;
-  final Logger logger;
+    final UserinfoService userinfoService;
+    final Logger logger;
 
 
-  public UserController(@Autowired UserinfoService userinfoService) {
-    this.userinfoService = userinfoService;
-    this.logger = LoggerFactory.getLogger(UserController.class);
-  }
-
-
-
-  /**
-   * 更新、删除用户记录
-   * @param request {@link UserRequest}
-   * @return API response json
-   */
-  @PostMapping(value = "/api/user")
-  ApiResponse create(@RequestBody UserRequest request) {
-    logger.info("/api/user post request, action: {}", request.getAction());
-
-    if (request.getAction().equals("inc")) {
-
-      Userinfo userinfo = new Userinfo();
-      userinfo.setId(request.getId());
-      userinfo.setSex(request.getSex());
-      userinfo.setLocation(request.getLocation());
-      userinfoService.upsertUser(userinfo);
-      return ApiResponse.ok(userinfo);
-    } else if (request.getAction().equals("clear")) {
-      userinfoService.clearUser(request.getId());
-      return ApiResponse.ok(0);
-    } else {
-      return ApiResponse.error("参数action错误");
+    public UserController(@Autowired UserinfoService userinfoService) {
+        this.userinfoService = userinfoService;
+        this.logger = LoggerFactory.getLogger(UserController.class);
     }
-  }
 
 
+    /**
+     * 更新、删除用户记录
+     *
+     * @param request {@link UserRequest}
+     * @return API response json
+     */
+    @PostMapping(value = "/api/user")
+    ApiResponse create(@RequestBody UserRequest request) {
+        logger.info("/api/user post request, action: {}", request.getAction());
 
-  @PostMapping(value = "api/emotion")
-  public void emotion(@RequestParam String id, @RequestParam String src){
+        if (request.getAction().equals("inc")) {
 
-    String emotion = FaceDetect.faceDetect(src);
-    Userinfo userinfo = new Userinfo();
-    userinfo.setId(id);
-    userinfo.setEmotion("temp");
+            Userinfo userinfo = new Userinfo();
+            userinfo.setId(request.getId());
+            userinfo.setSex(request.getSex());
+            userinfo.setLocation(request.getLocation());
+            userinfoService.upsertUser(userinfo);
+            return ApiResponse.ok(userinfo);
+        } else if (request.getAction().equals("clear")) {
+            userinfoService.clearUser(request.getId());
+            return ApiResponse.ok(0);
+        } else {
+            return ApiResponse.error("参数action错误");
+        }
+    }
 
-    userinfoService.upsertUserEmotion(userinfo);
-  }
 
-  
+    @PostMapping(value = "api/emotion")
+    ApiResponse emotion(@RequestParam String id, @RequestParam String src) {
+
+        String emotion = FaceDetect.faceDetect(src);
+        if (null != emotion) {
+            Userinfo userinfo = new Userinfo();
+            userinfo.setId(id);
+            userinfo.setEmotion("temp");
+
+            userinfoService.upsertUserEmotion(userinfo);
+            return ApiResponse.ok(emotion);
+        } else {
+            return ApiResponse.error("您的头像可能没有表情");
+        }
+    }
+
+
 }
