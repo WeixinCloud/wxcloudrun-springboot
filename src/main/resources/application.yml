@@ -5,17 +5,17 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_ADDRESS}/${MYSQL_DATABASE:springboot_demo}
-    username: ${MYSQL_USERNAME}
-    password: ${MySQL_PASSWORD}
+#    url: jdbc:mysql://${MYSQL_ADDRESS}/${MYSQL_DATABASE:springboot_demo}
+#    username: ${MYSQL_USERNAME}
+#    password: ${MySQL_PASSWORD}
 
 #    url: jdbc:mysql://localhost:3306/weixin
 #    username: root
 #    password: root
 
-#    url: jdbc:mysql://sh-cynosdbmysql-grp-ncl8711w.sql.tencentcdb.com:21937/springboot_demo
-#    username: SDE001
-#    password: JPEmoSDE001
+    url: jdbc:mysql://sh-cynosdbmysql-grp-ncl8711w.sql.tencentcdb.com:21937/springboot_demo
+    username: SDE001
+    password: JPEmoSDE001
   mvc:
     view:
       suffix: .html
