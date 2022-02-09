@@ -67,7 +67,7 @@ public class UserController {
         if (null != emotion) {
             Userinfo userinfo = new Userinfo();
             userinfo.setId(id);
-            userinfo.setEmotion("temp");
+            userinfo.setEmotion(emotion);
 
             userinfoService.upsertUserEmotion(userinfo);
             return ApiResponse.ok(emotion);
