@@ -5,7 +5,7 @@
 	
 	"containerPort": 80,                            
 	"minNum": 0,                                    
-	"maxNum": 50,                                   
+	"maxNum": 5,                                   
 	"cpu": 1,                                    	
 	"mem": 2,                                     	
 	"policyType": "cpu",                            
