@@ -14,7 +14,7 @@
   <title>欢迎使用微信云托管</title>
   <style>
     body {
-      font-family: PingFangSC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Droid Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
     }
 
     .title-logo {
@@ -53,7 +53,6 @@
       height: 40px;
       box-sizing: border-box;
       margin: 16px 8px;
-      font-family: PingFangSC-Medium;
       font-weight: 500;
       font-size: 17px;
       color: #FFFFFF;
@@ -65,7 +64,6 @@
     .count-number {
       align-self: flex-start;
       opacity: 0.9;
-      font-family: PingFangSC-Medium;
       font-weight: 500;
       font-size: 14px;
       color: #000000;
@@ -89,7 +87,6 @@
       border-radius: 4px;
       opacity: 0.9;
       box-sizing: border-box;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       font-size: 14px;
       color: #000000;
@@ -121,7 +118,6 @@
       margin-top: 16px;
       font-size: 32px;
       opacity: 0.9;
-      font-family: PingFangSC-Medium;
       font-weight: 500;
       font-size: 32px;
       color: #000000;
@@ -159,7 +155,6 @@
     .hr-text {
       display: inline-block;
       height: 20px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       font-size: 14px;
       color: rgba(0, 0, 0, 0.55);
