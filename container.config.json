@@ -9,7 +9,17 @@
 	"cpu": 1,                                    	
 	"mem": 2,                                     	
 	"policyType": "cpu",                            
-	"policyThreshold": 50,     
+	"policyThreshold": 50,
+	"policyDetails": {
+		{
+			"PolicyType": "cpu",
+			"PolicyThreshold": 50
+		},
+		{
+			"PolicyType": "mem",
+			"PolicyThreshold": 50
+		}
+	},
 	"envParams": {},                                
 	"customLogs": "stdout",                         
 	"dataBaseName":"springboot_demo",               
