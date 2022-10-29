@@ -12,7 +12,6 @@
     <artifactId>wx-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-
     <!-- 继承说明：这里继承 SpringBoot 提供的父工程 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
