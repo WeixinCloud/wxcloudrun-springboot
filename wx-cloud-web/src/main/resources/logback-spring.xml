@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 每隔一分钟扫描配置文件 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 设置上下文名称为 demo -->
+    <contextName>demo</contextName>
+
+    <!-- 定义日志字符集 -->
+    <springProperty scope="context" name="log.charset" source="log.charset" defaultValue="UTF-8"/>
+    <!-- 定义日志级别 -->
+    <springProperty scope="context" name="log.level" source="log.level" defaultValue="INFO"/>
+    <!-- 定义日志存放路径 -->
+    <springProperty scope="context" name="log.path" source="log.path" defaultValue="./logs"/>
+    <!-- 定义日志输出格式变量：%d表示时间 花括号内为时间格式 %level表示日志级别 %thread表示线程名 %logger{0}表示输出日志的类名 [%line]表示行号用方括号包裹 %msg表示日志消息 %n换行 -->
+    <springProperty scope="context" name="log.pattern" source="log.pattern" defaultValue="[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %level [%thread] %logger{0}[%line] - %msg%n"/>
+
+    <!-- 输出到控制台 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志输出格式 -->
+        <encoder>
+            <!-- 日志字符集 -->
+            <charset>${log.charset}</charset>
+            <!-- 日志输出格式 -->
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 时间滚动输出日志 -->
+    <appender name="COMMON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 写入的文件名 -->
+        <file>${log.path}/common.log</file>
+        <!-- 追加到文件结尾 -->
+        <append>true</append>
+        <!-- 滚动策略：按照每天生成日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日志归档路径及文件名格式 -->
+            <fileNamePattern>${log.path}/common.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志文件保留天数 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/error.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 单日志文件最大限制100兆 超过则将文件内容归档到按照 fileNamePattern 命名的文件中 源文件则清空 -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 级别过滤器匹配 ERROR 级别日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DB" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/db.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/db.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/controller.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/controller.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 指定 com.example.demo.dao.mapper 包要使用的 appender 且不向上级传递 -->
+    <logger name="com.example.demo.dao.mapper" level="DEBUG" additivity="false">
+        <!-- 指定使用 DB 及 ERROR 这两个 appender -->
+        <appender-ref ref="DB"/>
+        <appender-ref ref="ERROR"/>
+    </logger>
+
+    <logger name="controller" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="CONTROLLER"/>
+        <appender-ref ref="ERROR"/>
+    </logger>
+
+    <!-- 根 logger -->
+    <root level="${log.level}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="COMMON"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+</configuration>

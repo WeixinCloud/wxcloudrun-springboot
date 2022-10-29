@@ -1,5 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
+import com.tencent.wxcloudrun.annotation.ApiRequest;
+import com.tencent.wxcloudrun.dto.Result;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebHookController {
 
     @PostMapping("/v1/pay")
-    public void payCallback(){
-
+    @ApiRequest
+    public Result<Void> payCallback(){
+        return Result.Success();
     }
 }
