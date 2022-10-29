@@ -13,7 +13,7 @@ public class WxPrePayParam implements Serializable {
     private String spbill_create_ip;
     private String env_id;
     private String sub_mch_id;
-    private String total_fee;
-    private String callback_type;
+    private Integer total_fee;
+    private Integer callback_type;
     private WxContainerDTO container;
 }
