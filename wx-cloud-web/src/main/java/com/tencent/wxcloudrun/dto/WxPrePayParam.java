@@ -16,4 +16,5 @@ public class WxPrePayParam implements Serializable {
     private Integer total_fee;
     private Integer callback_type;
     private WxContainerDTO container;
+    private String nonce_str;
 }
