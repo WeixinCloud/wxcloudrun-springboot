@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.dto;
+package com.tencent.wxcloudrun.model.request;
 
 import lombok.Data;
 
@@ -13,8 +13,13 @@ public class WxPrePayParam implements Serializable {
     private String spbill_create_ip;
     private String env_id;
     private String sub_mch_id;
-    private Integer total_fee;
+    private String total_fee;
     private Integer callback_type;
     private WxContainerDTO container;
-    private String nonce_str;
+
+    @Data
+    public class WxContainerDTO {
+        private String service;
+        private String path;
+    }
 }

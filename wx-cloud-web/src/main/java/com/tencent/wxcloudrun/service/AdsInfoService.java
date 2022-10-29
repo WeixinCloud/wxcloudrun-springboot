@@ -1,11 +1,10 @@
 package com.tencent.wxcloudrun.service;
 
-import com.tencent.wxcloudrun.dto.AdsPageParam;
-import com.tencent.wxcloudrun.dto.PageDTO;
-import com.tencent.wxcloudrun.dto.WxPrePayParam;
+import com.tencent.wxcloudrun.model.request.AdsPageParam;
+import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

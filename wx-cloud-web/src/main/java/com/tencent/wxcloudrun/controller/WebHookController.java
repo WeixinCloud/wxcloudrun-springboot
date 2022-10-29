@@ -1,7 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.annotation.ApiRequest;
-import com.tencent.wxcloudrun.dto.Result;
+import com.tencent.wxcloudrun.model.response.Result;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

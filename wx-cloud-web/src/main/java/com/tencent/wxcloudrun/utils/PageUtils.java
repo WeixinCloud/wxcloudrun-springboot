@@ -2,7 +2,7 @@
 package com.tencent.wxcloudrun.utils;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.tencent.wxcloudrun.dto.PageDTO;
+import com.tencent.wxcloudrun.model.dto.PageDTO;
 
 public class PageUtils {
 

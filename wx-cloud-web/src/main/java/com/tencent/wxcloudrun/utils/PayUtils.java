@@ -1,11 +1,10 @@
 package com.tencent.wxcloudrun.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.tencent.wxcloudrun.dto.WxPrePayParam;
-
 import java.security.MessageDigest;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 
 public class PayUtils {
 
@@ -23,7 +22,6 @@ public class PayUtils {
             }
         }
         sb.append("key=" + key);//这里是商户那里设置的key);
-//        System.out.println("签名MD5未变大写：" + MD5Util.MD5Encode(sb.toString(), characterEncoding));
         String sign = md5Password(sb.toString()).toUpperCase();
         return sign;
     }

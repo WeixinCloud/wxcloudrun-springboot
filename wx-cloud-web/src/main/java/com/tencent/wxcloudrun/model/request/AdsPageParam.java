@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.dto;
+package com.tencent.wxcloudrun.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

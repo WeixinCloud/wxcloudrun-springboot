@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.dto;
+package com.tencent.wxcloudrun.model.response;
 
 import java.io.Serializable;
 
