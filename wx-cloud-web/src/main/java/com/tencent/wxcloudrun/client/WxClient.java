@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.client;
 
+import com.alibaba.fastjson2.JSON;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 import com.tencent.wxcloudrun.utils.HttpUtils;
@@ -53,13 +54,13 @@ public class WxClient {
         map.put("notify_url", WX_V3_PAY_WEB_HOOK_URL);
         //trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识
         map.put("openid", param.getOpenid());
-        String unifiedorderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder"; // 微信统一下单URL
         try {
             String sign = SignUtils.getSign(map, WX_V3_API_SECRET);// 生成签名 PAY_API_SECRET=微信支付相关API调用时使用的秘钥
             map.put("sign", sign);  // 参数配置 我
             String xml = WXPayUtil.mapToXml(map);
             //请求微信统一下单接口
-            String xmlStr = HttpUtils.httpRequest(unifiedorderUrl, "POST", xml);
+            String xmlStr = HttpUtils.httpRequest(WX_MCH_PRE_ORDER_URL, "POST", xml);
+            log.info("{},{}", JSON.toJSONString(map), JSON.toJSONString(xmlStr));
         } catch (Exception e) {
             log.error("请求微信下单接口异常", e);
             throw new RuntimeException("请求微信下单接口异常", e);
