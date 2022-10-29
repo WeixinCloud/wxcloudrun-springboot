@@ -3,8 +3,10 @@ package com.tencent.wxcloudrun.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tencent.wxcloudrun.client.WxClient;
 import com.tencent.wxcloudrun.dto.AdsPageParam;
 import com.tencent.wxcloudrun.dto.PageDTO;
+import com.tencent.wxcloudrun.dto.WxPrePayParam;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.repository.AdsInfoRepository;
 import com.tencent.wxcloudrun.service.AdsInfoService;
@@ -25,6 +27,9 @@ import java.util.List;
 public class AdsInfoServiceImpl implements AdsInfoService {
 
     @Autowired
+    private WxClient wxClient;
+
+    @Autowired
     private AdsInfoRepository adsInfoRepository;
 
     @Override
@@ -41,5 +46,10 @@ public class AdsInfoServiceImpl implements AdsInfoService {
         queryWrapper.eq(AdsInfoEntity::getStatus, "ON");
         IPage<AdsInfoEntity> record = adsInfoRepository.page(page, queryWrapper);
         return PageUtils.copy(record);
+    }
+
+    @Override
+    public void prePay(WxPrePayParam param) {
+        wxClient.prePay(param);
     }
 }
