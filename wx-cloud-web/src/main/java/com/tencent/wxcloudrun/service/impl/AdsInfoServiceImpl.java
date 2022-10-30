@@ -1,27 +1,31 @@
 package com.tencent.wxcloudrun.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.wxpay.sdk.WXPayUtil;
 import com.tencent.wxcloudrun.client.WxClient;
-import com.tencent.wxcloudrun.model.dto.WxPrePayDTO;
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
+import com.tencent.wxcloudrun.constants.WxEvent;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
+import com.tencent.wxcloudrun.entity.AdsOrderLogEntity;
+import com.tencent.wxcloudrun.model.dto.Container;
+import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.AdsPageParam;
+import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
+import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
+import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 import com.tencent.wxcloudrun.repository.AdsInfoRepository;
+import com.tencent.wxcloudrun.repository.AdsOrderLogRepository;
 import com.tencent.wxcloudrun.service.AdsInfoService;
+import com.tencent.wxcloudrun.utils.IPUtils;
+import com.tencent.wxcloudrun.utils.NonceUtil;
 import com.tencent.wxcloudrun.utils.PageUtils;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author tangsh
@@ -32,11 +36,20 @@ import java.util.Map;
 @Slf4j
 public class AdsInfoServiceImpl implements AdsInfoService {
 
+    @Value("${wx.env.id:prod-9ge6u8sn7684a421}")
+    public String WX_ENV_ID;
+    @Value("${wx.api.id:wx180962a99caf9ff5}")
+    public String WX_APP_ID;
+    @Value("${wx.mch.id:1633796573}")
+    public String WX_MERCHANT_ID;
+
     @Autowired
     private WxClient wxClient;
 
     @Autowired
     private AdsInfoRepository adsInfoRepository;
+    @Autowired
+    private AdsOrderLogRepository adsOrderLogRepository;
 
     @Override
     public List<AdsInfoEntity> list() {
@@ -55,16 +68,54 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     }
 
     @Override
-    public void prePay(WxPrePayParam param) {
-        wxClient.prePay(param);
+    public JSONObject prePay(WxPrePayParam param) {
+        JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
+        reqJson.put("sub_mch_id", WX_MERCHANT_ID);
+        reqJson.put("env_id", WX_ENV_ID);
+        String outTradeNo = NonceUtil.createNonce(32);
+        reqJson.put("out_trade_no", outTradeNo);
+        reqJson.put("spbill_create_ip", IPUtils.getLocalIp());
+        reqJson.put("callback_type", 2);
+        Container container = new Container();
+        container.setPath("/webhook/v1/pay");
+        container.setService("pre-pay");
+        reqJson.put("container", container);
+        WxEvent event = WxEvent.UNIFIED_ORDER;
+        JSONObject respJson = wxClient.prePay(reqJson);
+        saveOrderLog(reqJson, respJson, event);
+        return respJson;
     }
 
-    @SneakyThrows
-    public static void main(String[] args) {
-        String msg ="{\"nonce_str\":\"89f1e03f32174781b43b9472a34819ec\",\"out_trade_no\":\"2021WERUN16478406876373\",\"openid\":\"oXPeb4gGUWuARbGkIcvrb3PXTb30\",\"appid\":\"wx180962a99caf9ff5\",\"total_fee\":\"1\",\"sign\":\"F1416A07F0BE84ED3E22F3DA5BF00D5A\",\"trade_type\":\"JSAPI\",\"mch_id\":\"1633796573\",\"body\":\"测试wechat-pay\",\"notify_url\":\"https://springboot-mvyj-15312-5-1314693576.sh.run.tcloudbase.com/webhook/v1/pay\",\"spbill_create_ip\":\"10.28.16.126\"}";
-//        WxPrePayDTO dto = JSON.parseObject(msg, WxPrePayDTO.class);
-        Map map = JSONObject.parseObject(msg);
-        String xml = WXPayUtil.mapToXml(map);
-        System.out.println(xml);
+    @Override
+    public JSONObject payQuery(WxPayQueryParam param) {
+        JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
+        reqJson.put("sub_mch_id", WX_MERCHANT_ID);
+        WxEvent event = WxEvent.QUERY_ORDER;
+        JSONObject respJson = wxClient.payQuery(reqJson);
+        saveOrderLog(reqJson, respJson, event);
+        return respJson;
+    }
+
+    @Override
+    public JSONObject payClose(WxPayCloseParam param) {
+        JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
+        reqJson.put("sub_mch_id", WX_MERCHANT_ID);
+        WxEvent event = WxEvent.CLOSE_ORDER;
+        JSONObject respJson = wxClient.payClose(reqJson);
+        saveOrderLog(reqJson, respJson, event);
+        return respJson;
+    }
+
+
+    private void saveOrderLog(JSONObject reqJson, JSONObject respJson, WxEvent event) {
+        AdsOrderLogEntity entity = new AdsOrderLogEntity();
+        String openId = reqJson.getString("openId");
+        String outTradeNo = reqJson.getString("out_trade_no");
+        entity.setOpenId(openId);
+        entity.setEvent(event.name());
+        entity.setReq(reqJson.toJSONString());
+        entity.setResp(respJson.toJSONString());
+        entity.setOutTradeNo(outTradeNo);
+        adsOrderLogRepository.save(entity);
     }
 }

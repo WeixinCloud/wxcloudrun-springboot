@@ -1,9 +1,12 @@
 package com.tencent.wxcloudrun.service;
 
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
+import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.AdsPageParam;
+import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
+import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
+import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 
 import java.util.List;
 
@@ -18,5 +21,9 @@ public interface AdsInfoService {
 
     PageDTO<AdsInfoEntity> page(AdsPageParam param);
 
-    void prePay(WxPrePayParam request);
+    JSONObject prePay(WxPrePayParam param);
+
+    JSONObject payQuery(WxPayQueryParam param);
+
+    JSONObject payClose(WxPayCloseParam param);
 }

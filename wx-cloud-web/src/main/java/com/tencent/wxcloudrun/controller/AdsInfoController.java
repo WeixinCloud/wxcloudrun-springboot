@@ -1,9 +1,12 @@
 
 package com.tencent.wxcloudrun.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
 import com.tencent.wxcloudrun.model.request.AdsPageParam;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
+import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
 import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.model.response.Result;
@@ -35,8 +38,22 @@ public class AdsInfoController {
 
     @PostMapping("/v1/ads/pay")
     @ApiRequest
-    public Result<Void> pay(@RequestBody @Validated WxPrePayParam param) {
-        adsInfoService.prePay(param);
-        return Result.Success();
+    public Result<JSONObject> prePay(@RequestBody @Validated WxPrePayParam param) {
+        JSONObject result = adsInfoService.prePay(param);
+        return Result.Success(result);
+    }
+
+    @PostMapping("/v1/ads/pay-query")
+    @ApiRequest
+    public Result<JSONObject> payQuery(@RequestBody WxPayQueryParam param) {
+        JSONObject result = adsInfoService.payQuery(param);
+        return Result.Success(result);
+    }
+
+    @PostMapping("/v1/ads/pay-close")
+    @ApiRequest
+    public Result<JSONObject> payClose(@RequestBody WxPayCloseParam param) {
+        JSONObject result = adsInfoService.payClose(param);
+        return Result.Success(result);
     }
 }

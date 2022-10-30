@@ -3,8 +3,8 @@ package com.tencent.wxcloudrun.model.response;
 import java.io.Serializable;
 
 /**
- * @author linjian
- * @date 2019/3/14
+ * @author tangsh
+ * @date 2022/10/30
  */
 public class Result<T> implements Serializable {
 

@@ -2,10 +2,9 @@ package com.tencent.wxcloudrun;
 
 import com.alibaba.fastjson.JSON;
 import com.tencent.wxcloudrun.client.WxClient;
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
+import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.AdsPageParam;
 import com.tencent.wxcloudrun.service.AdsInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -39,18 +38,5 @@ public class WxTest {
         PageDTO<AdsInfoEntity> pageDTO = adsInfoService.page(param);
         log.info("{}", JSON.toJSONString(pageDTO));
     }
-
-    @Test
-    public void test_wx_pay() {
-        String msg = "{\"body\":\"测试wechat-pay\",\"callback_type\":2,\"container\":{\"path\":\"/webhook/v1/pay\",\"service\":\"pay\"},\"env_id\":\"prod-9ge6u8sn7684a421\",\"openid\":\"oXPeb4gGUWuARbGkIcvrb3PXTb30\",\"out_trade_no\":\"2021WERUN16478406876373\",\"spbill_create_ip\":\"218.74.6.72\",\"sub_mch_id\":\"1712734762\",\"total_fee\":1}";
-        WxPrePayParam param = JSON.parseObject(msg, WxPrePayParam.class);
-        wxClient.prePay(param);
-//        String sign = PayUtils.createSign(WX_V3_API_SECRET, maps);
-//        reqJson.put("sign", sign);
-//        System.out.println(reqJson.toJSONString());
-//        System.out.println(sign);
-
-    }
-
 }
 
