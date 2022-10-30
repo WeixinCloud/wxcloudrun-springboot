@@ -3,14 +3,16 @@ package com.tencent.wxcloudrun.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
+import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.model.request.AdsPageParam;
 import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
 import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
 import com.tencent.wxcloudrun.model.request.WxPrePayParam;
-import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.AdsInfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author tangsh
  * @date 2022/10/27
  */
+@Api(tags = "广告模块")
 @RestController
 @RequestMapping("/front")
 public class AdsInfoController {
@@ -29,6 +32,7 @@ public class AdsInfoController {
     @Autowired
     private AdsInfoService adsInfoService;
 
+    @ApiOperation("广告查询-分页")
     @PostMapping("/v1/ads/page")
     @ApiRequest
     public Result<PageDTO<AdsInfoEntity>> page(@RequestBody @Validated AdsPageParam param) {
@@ -36,6 +40,7 @@ public class AdsInfoController {
         return Result.Success(pageResult);
     }
 
+    @ApiOperation("广告订单-预支付")
     @PostMapping("/v1/ads/pay")
     @ApiRequest
     public Result<JSONObject> prePay(@RequestBody @Validated WxPrePayParam param) {
@@ -43,6 +48,7 @@ public class AdsInfoController {
         return Result.Success(result);
     }
 
+    @ApiOperation("广告订单-查询")
     @PostMapping("/v1/ads/pay-query")
     @ApiRequest
     public Result<JSONObject> payQuery(@RequestBody WxPayQueryParam param) {
@@ -50,6 +56,7 @@ public class AdsInfoController {
         return Result.Success(result);
     }
 
+    @ApiOperation("广告订单-关闭")
     @PostMapping("/v1/ads/pay-close")
     @ApiRequest
     public Result<JSONObject> payClose(@RequestBody WxPayCloseParam param) {
