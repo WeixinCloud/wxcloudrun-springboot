@@ -1,7 +1,6 @@
 package com.tencent.wxcloudrun.utils;
 
 import java.security.MessageDigest;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -9,19 +8,19 @@ import java.util.SortedMap;
 public class PayUtils {
 
     public static String createSign(String key, SortedMap<String, Object> parameters) {
-        StringBuffer sb = new StringBuffer();
-        Set es = parameters.entrySet();//全部参与传参的参数按照accsii排序（升序）
-        Iterator it = es.iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
+        StringBuilder sb = new StringBuilder();
+        //全部参与传参的参数按照accsii排序（升序）
+        Set es = parameters.entrySet();
+        for (Object e : es) {
+            Map.Entry entry = (Map.Entry) e;
             String k = (String) entry.getKey();
             Object v = entry.getValue();
             if (null != v && !"".equals(v)
                     && !"sign".equals(k) && !"key".equals(k)) {
-                sb.append(k + "=" + v + "&");
+                sb.append(k).append("=").append(v).append("&");
             }
         }
-        sb.append("key=" + key);//这里是商户那里设置的key);
+        sb.append("key=").append(key);
         String sign = md5Password(sb.toString()).toUpperCase();
         return sign;
     }
@@ -33,7 +32,7 @@ public class PayUtils {
      * @return
      */
     public static String md5Password(String key) {
-        char hexDigits[] = {
+        char[] hexDigits = {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
         };
         try {
@@ -46,10 +45,9 @@ public class PayUtils {
             byte[] md = mdInst.digest();
             // 把密文转换成十六进制的字符串形式
             int j = md.length;
-            char str[] = new char[j * 2];
+            char[] str = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];
+            for (byte byte0 : md) {
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];
             }
