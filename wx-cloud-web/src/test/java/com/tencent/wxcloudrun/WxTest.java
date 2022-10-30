@@ -1,7 +1,7 @@
 package com.tencent.wxcloudrun;
 
 import com.alibaba.fastjson.JSON;
-import com.tencent.wxcloudrun.client.WxClient;
+import com.tencent.wxcloudrun.client.WxPayClient;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
 import com.tencent.wxcloudrun.model.request.AdsPageParam;
@@ -25,7 +25,7 @@ public class WxTest {
     public String WX_V3_API_SECRET;
 
     @Autowired
-    private WxClient wxClient;
+    private WxPayClient wxClient;
 
     @Autowired
     private AdsInfoService adsInfoService;

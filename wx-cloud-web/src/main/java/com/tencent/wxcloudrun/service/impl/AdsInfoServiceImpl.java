@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tencent.wxcloudrun.client.WxClient;
+import com.tencent.wxcloudrun.client.WxPayClient;
 import com.tencent.wxcloudrun.constants.WxEvent;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.entity.AdsOrderLogEntity;
@@ -44,7 +44,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     public String WX_MERCHANT_ID;
 
     @Autowired
-    private WxClient wxClient;
+    private WxPayClient wxClient;
 
     @Autowired
     private AdsInfoRepository adsInfoRepository;

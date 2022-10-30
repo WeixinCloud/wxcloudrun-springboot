@@ -2,12 +2,6 @@ package com.tencent.wxcloudrun.client;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.tencent.wxcloudrun.model.dto.Container;
-import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
-import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
-import com.tencent.wxcloudrun.utils.IPUtils;
-import com.tencent.wxcloudrun.utils.NonceUtil;
 import com.tencent.wxcloudrun.utils.WxUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class WxClient {
+public class WxPayClient {
 
 
     @Value("${wx.cloud.created.order.url:http://api.weixin.qq.com/_/pay/unifiedorder}")
