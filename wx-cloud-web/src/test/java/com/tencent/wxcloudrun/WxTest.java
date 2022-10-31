@@ -2,9 +2,12 @@ package com.tencent.wxcloudrun;
 
 import com.alibaba.fastjson.JSON;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
+import com.tencent.wxcloudrun.entity.AdsOrderEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
 import com.tencent.wxcloudrun.model.request.AdsPageParam;
+import com.tencent.wxcloudrun.model.request.OrderPageParam;
 import com.tencent.wxcloudrun.service.AdsInfoService;
+import com.tencent.wxcloudrun.service.OrderInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +28,8 @@ public class WxTest {
 
     @Autowired
     private AdsInfoService adsInfoService;
+    @Autowired
+    private OrderInfoService orderInfoService;
 
     @Test
     public void test_query_ads_page() {
@@ -32,6 +37,16 @@ public class WxTest {
         int pageSize = 2;
         AdsPageParam param = AdsPageParam.builder().pageNo(pageNo).pageSize(pageSize).build();
         PageDTO<AdsInfoEntity> pageDTO = adsInfoService.page(param);
+        log.info("{}", JSON.toJSONString(pageDTO));
+    }
+
+    @Test
+    public void test_query_order_page() {
+        int pageNo = 0;
+        int pageSize = 2;
+        String openid = "oPoo441ctvw8R0EwYeM8oT0bVNbo";
+        OrderPageParam param = OrderPageParam.builder().pageNo(pageNo).pageSize(pageSize).build();
+        PageDTO<AdsOrderEntity> pageDTO = orderInfoService.page(openid, param);
         log.info("{}", JSON.toJSONString(pageDTO));
     }
 }
