@@ -17,7 +17,6 @@ import com.tencent.wxcloudrun.model.request.WxPrePayParam;
 import com.tencent.wxcloudrun.repository.AdsInfoRepository;
 import com.tencent.wxcloudrun.repository.AdsOrderLogRepository;
 import com.tencent.wxcloudrun.service.AdsInfoService;
-import com.tencent.wxcloudrun.utils.IPUtils;
 import com.tencent.wxcloudrun.utils.NonceUtil;
 import com.tencent.wxcloudrun.utils.PageUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +57,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
 
     @Override
     public PageDTO<AdsInfoEntity> page(AdsPageParam param) {
-        int pageNo = param.getPageNo();
-        int pageSize = param.getPageSize();
-        IPage<AdsInfoEntity> page = new Page<>(pageNo, pageSize);
+        IPage<AdsInfoEntity> page = new Page<>(param.getPageNo(), param.getPageSize());
         LambdaQueryWrapper<AdsInfoEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(AdsInfoEntity::getStatus, "ON");
         IPage<AdsInfoEntity> record = adsInfoRepository.page(page, queryWrapper);

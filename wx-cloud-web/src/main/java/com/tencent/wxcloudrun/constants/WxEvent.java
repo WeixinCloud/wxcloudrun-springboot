@@ -2,6 +2,10 @@ package com.tencent.wxcloudrun.constants;
 
 import lombok.Getter;
 
+/**
+ * @author tangsh
+ * @date 2022/10/30
+ */
 @Getter
 public enum WxEvent {
 

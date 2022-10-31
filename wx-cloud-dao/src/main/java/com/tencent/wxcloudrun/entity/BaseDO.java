@@ -9,6 +9,10 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author tangsh
+ * @date 2022/10/30
+ */
 @Data
 public abstract class BaseDO implements Serializable {
 

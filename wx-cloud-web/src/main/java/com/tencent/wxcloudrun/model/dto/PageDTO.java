@@ -20,17 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PageDTO<T> implements Serializable {
 
-    private List<T> records = Collections.emptyList();
+    private List<T> records;
     private int total;
     private int size;
     private int pages;
     private int current;
-
-    public static <T extends Serializable> PageDTO<T> emptyList(int pages, int size) {
-        PageDTO<T> dto = new PageDTO<>();
-        dto.setTotal(0);
-        dto.setPages(pages);
-        dto.setSize(size);
-        return dto;
-    }
 }

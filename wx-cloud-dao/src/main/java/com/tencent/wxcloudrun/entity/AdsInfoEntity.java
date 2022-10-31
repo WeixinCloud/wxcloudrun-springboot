@@ -3,6 +3,10 @@ package com.tencent.wxcloudrun.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+/**
+ * @author tangsh
+ * @date 2022/10/30
+ */
 @Data
 @TableName("ads_info")
 public class AdsInfoEntity extends BaseDO {

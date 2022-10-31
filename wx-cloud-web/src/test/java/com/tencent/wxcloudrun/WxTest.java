@@ -29,7 +29,7 @@ public class WxTest {
     @Test
     public void test_query_ads_page() {
         int pageNo = 0;
-        int pageSize = 10;
+        int pageSize = 2;
         AdsPageParam param = AdsPageParam.builder().pageNo(pageNo).pageSize(pageSize).build();
         PageDTO<AdsInfoEntity> pageDTO = adsInfoService.page(param);
         log.info("{}", JSON.toJSONString(pageDTO));

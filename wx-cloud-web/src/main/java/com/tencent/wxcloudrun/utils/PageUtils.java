@@ -4,6 +4,10 @@ package com.tencent.wxcloudrun.utils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
 
+/**
+ * @author tangsh
+ * @date 2022/10/30
+ */
 public class PageUtils {
 
     public static <T> PageDTO<T> copy(IPage<T> page){
