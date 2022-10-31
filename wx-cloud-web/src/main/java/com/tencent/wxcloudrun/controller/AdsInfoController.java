@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
-import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
-import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
+import com.tencent.wxcloudrun.model.request.*;
 import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.AdsInfoService;
 import io.swagger.annotations.Api;
@@ -37,6 +34,13 @@ public class AdsInfoController {
     public Result<PageDTO<AdsInfoEntity>> page(@RequestBody @Validated AdsPageParam param) {
         PageDTO<AdsInfoEntity> pageResult = adsInfoService.page(param);
         return Result.Success(pageResult);
+    }
+
+    @ApiOperation("广告查询-详情")
+    @PostMapping("/v1/ads/detail")
+    @ApiRequest
+    public Result<AdsInfoEntity> detail(@RequestBody @Validated AdsDetailParam param) {
+        return Result.Success(adsInfoService.detail(param));
     }
 
     @ApiOperation("广告订单-预支付")

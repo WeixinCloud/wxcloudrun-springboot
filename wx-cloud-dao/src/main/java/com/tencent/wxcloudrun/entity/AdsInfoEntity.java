@@ -16,5 +16,6 @@ public class AdsInfoEntity extends BaseDO {
     private String img;
     private Integer fee;
     private String content;
+    private String category;
     private String status;
 }

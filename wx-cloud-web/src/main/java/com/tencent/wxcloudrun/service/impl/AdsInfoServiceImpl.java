@@ -5,15 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tencent.wxcloudrun.client.WxPayClient;
-import com.tencent.wxcloudrun.constants.WxEvent;
+import com.tencent.wxcloudrun.constants.CategoryEnum;
+import com.tencent.wxcloudrun.constants.WxEventEnum;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.entity.AdsOrderLogEntity;
 import com.tencent.wxcloudrun.model.dto.Container;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.AdsPageParam;
-import com.tencent.wxcloudrun.model.request.WxPayCloseParam;
-import com.tencent.wxcloudrun.model.request.WxPayQueryParam;
-import com.tencent.wxcloudrun.model.request.WxPrePayParam;
+import com.tencent.wxcloudrun.model.request.*;
 import com.tencent.wxcloudrun.repository.AdsInfoRepository;
 import com.tencent.wxcloudrun.repository.AdsOrderLogRepository;
 import com.tencent.wxcloudrun.service.AdsInfoService;
@@ -23,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -58,8 +57,21 @@ public class AdsInfoServiceImpl implements AdsInfoService {
         IPage<AdsInfoEntity> page = new Page<>(param.getPageNo(), param.getPageSize());
         LambdaQueryWrapper<AdsInfoEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(AdsInfoEntity::getStatus, "ON");
+        if (StringUtils.hasLength(param.getCategory())) {
+            CategoryEnum categoryEnum = CategoryEnum.getByCode(param.getCategory());
+            queryWrapper.eq(AdsInfoEntity::getCategory, categoryEnum.getCode());
+        }
+        if (StringUtils.hasLength(param.getTitle())) {
+            queryWrapper.eq(AdsInfoEntity::getTitle, param.getTitle());
+        }
         IPage<AdsInfoEntity> record = adsInfoRepository.page(page, queryWrapper);
+
         return PageUtils.copy(record);
+    }
+
+    @Override
+    public AdsInfoEntity detail(AdsDetailParam param) {
+        return adsInfoRepository.getById(param.getId());
     }
 
     @Override
@@ -76,7 +88,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
         container.setPath("/webhook/v1/pay");
         container.setService("pre-pay");
         reqJson.put("container", container);
-        WxEvent event = WxEvent.UNIFIED_ORDER;
+        WxEventEnum event = WxEventEnum.UNIFIED_ORDER;
         JSONObject respJson = wxClient.prePay(reqJson);
         saveOrderLog(reqJson, respJson, event);
         return respJson;
@@ -86,7 +98,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     public JSONObject payQuery(String openid, WxPayQueryParam param) {
         JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
         reqJson.put("sub_mch_id", WX_MERCHANT_ID);
-        WxEvent event = WxEvent.QUERY_ORDER;
+        WxEventEnum event = WxEventEnum.QUERY_ORDER;
         JSONObject respJson = wxClient.payQuery(reqJson);
         saveOrderLog(reqJson, respJson, event);
         return respJson;
@@ -96,14 +108,14 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     public JSONObject payClose(String openid, WxPayCloseParam param) {
         JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
         reqJson.put("sub_mch_id", WX_MERCHANT_ID);
-        WxEvent event = WxEvent.CLOSE_ORDER;
+        WxEventEnum event = WxEventEnum.CLOSE_ORDER;
         JSONObject respJson = wxClient.payClose(reqJson);
         saveOrderLog(reqJson, respJson, event);
         return respJson;
     }
 
 
-    private void saveOrderLog(JSONObject reqJson, JSONObject respJson, WxEvent event) {
+    private void saveOrderLog(JSONObject reqJson, JSONObject respJson, WxEventEnum event) {
         AdsOrderLogEntity entity = new AdsOrderLogEntity();
         String openId = reqJson.getString("openid");
         String outTradeNo = reqJson.getString("out_trade_no");

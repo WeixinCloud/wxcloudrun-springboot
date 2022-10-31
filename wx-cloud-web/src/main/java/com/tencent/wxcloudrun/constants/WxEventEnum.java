@@ -7,7 +7,7 @@ import lombok.Getter;
  * @date 2022/10/30
  */
 @Getter
-public enum WxEvent {
+public enum WxEventEnum {
 
     /**
      * 微信请求事件

@@ -15,15 +15,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdsPageParam {
+public class AdsDetailParam {
 
-    @NotNull(message = "起始页不能为空")
-    private Integer pageNo;
-
-    @NotNull(message = "分页大小不能为空")
-    private Integer pageSize;
-
-    private String title;
-
-    private String category;
+    @NotNull(message = "广告id不能为空")
+    private Integer id;
 }
