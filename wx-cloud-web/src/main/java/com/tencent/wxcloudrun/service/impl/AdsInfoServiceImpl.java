@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tencent.wxcloudrun.client.WxPayClient;
+import com.tencent.wxcloudrun.constants.AppConstant;
 import com.tencent.wxcloudrun.constants.CategoryEnum;
 import com.tencent.wxcloudrun.constants.WxEventEnum;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
@@ -62,7 +63,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
             queryWrapper.eq(AdsInfoEntity::getCategory, categoryEnum.getCode());
         }
         if (StringUtils.hasLength(param.getTitle())) {
-            queryWrapper.eq(AdsInfoEntity::getTitle, param.getTitle());
+            queryWrapper.like(AdsInfoEntity::getTitle, param.getTitle());
         }
         IPage<AdsInfoEntity> record = adsInfoRepository.page(page, queryWrapper);
 
@@ -85,8 +86,8 @@ public class AdsInfoServiceImpl implements AdsInfoService {
         reqJson.put("spbill_create_ip", ip);
         reqJson.put("callback_type", 2);
         Container container = new Container();
-        container.setPath("/webhook/v1/pay");
-        container.setService("pre-pay");
+        container.setPath(AppConstant.WEB_HOOK_PAY_PAHT);
+        container.setService(AppConstant.APP_SERVER);
         reqJson.put("container", container);
         WxEventEnum event = WxEventEnum.UNIFIED_ORDER;
         JSONObject respJson = wxClient.prePay(reqJson);

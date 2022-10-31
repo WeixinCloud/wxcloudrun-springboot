@@ -1,8 +1,8 @@
 package com.tencent.wxcloudrun.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tencent.wxcloudrun.entity.OrderEntity;
-import com.tencent.wxcloudrun.repository.OrderRepository;
+import com.tencent.wxcloudrun.entity.AdsOrderEntity;
+import com.tencent.wxcloudrun.repository.AdsOrderRepository;
 import com.tencent.wxcloudrun.service.WebhookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class WebhookServiceImpl implements WebhookService {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private AdsOrderRepository adsOrderRepository;
 
     @Override
     public JSONObject respWxPayHook(JSONObject req) {
@@ -25,18 +25,18 @@ public class WebhookServiceImpl implements WebhookService {
         String outTradeNo = req.getString("outTradeNo");
         String openid = req.getString("openid");
         Integer totalFee = req.getInteger("totalFee");
-        OrderEntity orderEntity = orderRepository.getOneByOrderNo(outTradeNo);
+        AdsOrderEntity orderEntity = adsOrderRepository.getOneByOrderNo(outTradeNo);
         if (orderEntity != null) {
             return respSuccess();
         }
-        OrderEntity order = new OrderEntity();
+        AdsOrderEntity order = new AdsOrderEntity();
         order.setOpenid(openid);
         order.setOutTradeNo(outTradeNo);
         order.setAmount(totalFee);
         order.setOrderType("PAY");
         order.setBusinessType("ADS");
         order.setResp(req.toJSONString());
-        orderRepository.save(order);
+        adsOrderRepository.save(order);
         return respSuccess();
     }
 
