@@ -13,12 +13,10 @@ import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.AdsInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author tangsh
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "广告模块")
 @RestController
 @RequestMapping("/front")
+@Slf4j
 public class AdsInfoController {
 
     @Autowired
@@ -43,24 +42,26 @@ public class AdsInfoController {
     @ApiOperation("广告订单-预支付")
     @PostMapping("/v1/ads/pay")
     @ApiRequest
-    public Result<JSONObject> prePay(@RequestBody @Validated WxPrePayParam param) {
-        JSONObject result = adsInfoService.prePay(param);
+    public Result<JSONObject> prePay(@RequestHeader("x-wx-openid") String openid,
+                                     @RequestHeader("x-real-ip") String ip,
+                                     @RequestBody @Validated WxPrePayParam param) {
+        JSONObject result = adsInfoService.prePay(openid, ip, param);
         return Result.Success(result);
     }
 
     @ApiOperation("广告订单-查询")
     @PostMapping("/v1/ads/pay-query")
     @ApiRequest
-    public Result<JSONObject> payQuery(@RequestBody WxPayQueryParam param) {
-        JSONObject result = adsInfoService.payQuery(param);
+    public Result<JSONObject> payQuery(@RequestHeader("x-wx-openid") String openid, @RequestBody WxPayQueryParam param) {
+        JSONObject result = adsInfoService.payQuery(openid, param);
         return Result.Success(result);
     }
 
     @ApiOperation("广告订单-关闭")
     @PostMapping("/v1/ads/pay-close")
     @ApiRequest
-    public Result<JSONObject> payClose(@RequestBody WxPayCloseParam param) {
-        JSONObject result = adsInfoService.payClose(param);
+    public Result<JSONObject> payClose(@RequestHeader("x-wx-openid") String openid, @RequestBody WxPayCloseParam param) {
+        JSONObject result = adsInfoService.payClose(openid, param);
         return Result.Success(result);
     }
 }

@@ -7,7 +7,6 @@ import java.io.Serializable;
 @Data
 public class WxPrePayParam implements Serializable {
 
-    private String openid;
     private String body;
     private Integer total_fee;
 }

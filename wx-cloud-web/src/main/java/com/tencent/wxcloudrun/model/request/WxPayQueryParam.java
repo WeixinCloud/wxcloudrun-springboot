@@ -10,6 +10,5 @@ import java.io.Serializable;
  */
 @Data
 public class WxPayQueryParam implements Serializable {
-    private String openid;
     private String out_trade_no;
 }

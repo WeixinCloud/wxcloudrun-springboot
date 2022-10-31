@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author tangsh
  * @date 2022/10/27
  */
-@Api(tags = "用户模块")
+@ApiIgnore
 @RestController
 @RequestMapping("/front")
 public class UserInfoController {

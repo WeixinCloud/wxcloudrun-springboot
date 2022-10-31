@@ -68,13 +68,14 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     }
 
     @Override
-    public JSONObject prePay(WxPrePayParam param) {
+    public JSONObject prePay(String openid, String ip, WxPrePayParam param) {
         JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
+        reqJson.put("openid", openid);
         reqJson.put("sub_mch_id", WX_MERCHANT_ID);
         reqJson.put("env_id", WX_ENV_ID);
         String outTradeNo = NonceUtil.createNonce(32);
         reqJson.put("out_trade_no", outTradeNo);
-        reqJson.put("spbill_create_ip", IPUtils.getLocalIp());
+        reqJson.put("spbill_create_ip", ip);
         reqJson.put("callback_type", 2);
         Container container = new Container();
         container.setPath("/webhook/v1/pay");
@@ -87,7 +88,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     }
 
     @Override
-    public JSONObject payQuery(WxPayQueryParam param) {
+    public JSONObject payQuery(String openid, WxPayQueryParam param) {
         JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
         reqJson.put("sub_mch_id", WX_MERCHANT_ID);
         WxEvent event = WxEvent.QUERY_ORDER;
@@ -97,7 +98,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     }
 
     @Override
-    public JSONObject payClose(WxPayCloseParam param) {
+    public JSONObject payClose(String openid, WxPayCloseParam param) {
         JSONObject reqJson = (JSONObject) JSONObject.toJSON(param);
         reqJson.put("sub_mch_id", WX_MERCHANT_ID);
         WxEvent event = WxEvent.CLOSE_ORDER;
@@ -109,7 +110,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
 
     private void saveOrderLog(JSONObject reqJson, JSONObject respJson, WxEvent event) {
         AdsOrderLogEntity entity = new AdsOrderLogEntity();
-        String openId = reqJson.getString("openId");
+        String openId = reqJson.getString("openid");
         String outTradeNo = reqJson.getString("out_trade_no");
         entity.setOpenId(openId);
         entity.setEvent(event.name());

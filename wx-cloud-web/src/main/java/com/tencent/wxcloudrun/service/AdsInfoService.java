@@ -21,9 +21,9 @@ public interface AdsInfoService {
 
     PageDTO<AdsInfoEntity> page(AdsPageParam param);
 
-    JSONObject prePay(WxPrePayParam param);
+    JSONObject prePay(String openid, String ip, WxPrePayParam param);
 
-    JSONObject payQuery(WxPayQueryParam param);
+    JSONObject payQuery(String openid, WxPayQueryParam param);
 
-    JSONObject payClose(WxPayCloseParam param);
+    JSONObject payClose(String openid, WxPayCloseParam param);
 }
