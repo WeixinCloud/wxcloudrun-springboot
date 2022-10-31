@@ -31,4 +31,18 @@ public class WxUtils {
         }
         return wxResult;
     }
+
+    public static JSONObject getPhoneInfo(String response) {
+        JSONObject respJson = JSON.parseObject(response);
+        if (respJson == null || respJson.getInteger("errcode") != 0) {
+            log.warn("请求微信-接口异常");
+            return null;
+        }
+        JSONObject wxResult = respJson.getJSONObject("phone_info");
+        if (wxResult == null) {
+            log.warn("请求微信-接口异常");
+            return null;
+        }
+        return wxResult;
+    }
 }

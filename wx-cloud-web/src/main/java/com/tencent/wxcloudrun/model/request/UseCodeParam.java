@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UseLoginParam {
+public class UseCodeParam {
 
     private String code;
 }
