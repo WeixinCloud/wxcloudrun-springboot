@@ -6,10 +6,10 @@ FROM maven:3.6.0-jdk-8-slim as build
 WORKDIR /app
 
 # 将src目录下所有文件，拷贝到工作目录中src目录下（.gitignore/.dockerignore中文件除外）
-COPY wx-cloud/wx-cloud-web/src /app/src
+COPY src /app/src
 
 # 将pom.xml文件，拷贝到工作目录下
-COPY wx-cloud/settings.xml wx-cloud/pom.xml wx-cloud/wx-cloud-web/pom.xml wx-cloud/wx-cloud-dao/pom.xml /app/
+COPY settings.xml pom.xml /app/
 
 # 执行代码编译命令
 # 自定义settings.xml, 选用国内镜像源以提高下载速度
