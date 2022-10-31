@@ -37,8 +37,6 @@ public class AdsInfoServiceImpl implements AdsInfoService {
 
     @Value("${wx.env.id:prod-9ge6u8sn7684a421}")
     public String WX_ENV_ID;
-    @Value("${wx.api.id:wx180962a99caf9ff5}")
-    public String WX_APP_ID;
     @Value("${wx.mch.id:1633796573}")
     public String WX_MERCHANT_ID;
 
@@ -109,7 +107,7 @@ public class AdsInfoServiceImpl implements AdsInfoService {
         AdsOrderLogEntity entity = new AdsOrderLogEntity();
         String openId = reqJson.getString("openid");
         String outTradeNo = reqJson.getString("out_trade_no");
-        entity.setOpenId(openId);
+        entity.setOpenid(openId);
         entity.setEvent(event.name());
         entity.setReq(reqJson.toJSONString());
         entity.setResp(respJson.toJSONString());

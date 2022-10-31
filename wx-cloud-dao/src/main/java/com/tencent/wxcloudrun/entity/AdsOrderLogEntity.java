@@ -11,7 +11,7 @@ import lombok.Data;
 @TableName("ads_order_log")
 public class AdsOrderLogEntity extends BaseDO {
 
-    private String openId;
+    private String openid;
     private String outTradeNo;
     private String event;
     private String req;

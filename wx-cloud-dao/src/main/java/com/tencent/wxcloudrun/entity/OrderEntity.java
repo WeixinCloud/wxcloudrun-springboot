@@ -8,13 +8,15 @@ import lombok.Data;
  * @date 2022/10/31
  */
 @Data
-@TableName("ads_order")
-public class AdsOrderEntity extends BaseDO {
+@TableName("order")
+public class OrderEntity extends BaseDO {
 
     private String openid;
     private String outTradeNo;
-    private Integer fee;
-    private String callType;
+    private Integer amount;
+    private String currency;
+    private String businessType;
+    private String orderType;
     private String resp;
 
 }
