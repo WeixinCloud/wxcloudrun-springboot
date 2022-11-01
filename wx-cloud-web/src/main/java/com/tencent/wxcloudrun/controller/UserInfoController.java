@@ -4,8 +4,10 @@ package com.tencent.wxcloudrun.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
+import com.tencent.wxcloudrun.entity.UserEntity;
 import com.tencent.wxcloudrun.model.request.UseCodeParam;
 import com.tencent.wxcloudrun.model.request.UseLoginParam;
+import com.tencent.wxcloudrun.model.request.UserInfoParam;
 import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.UserInfoService;
 import io.swagger.annotations.Api;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author tangsh
@@ -35,6 +36,13 @@ public class UserInfoController {
     @ApiRequest
     public Result<JSONObject> login(@RequestBody @Validated UseLoginParam param) {
         return Result.Success(userInfoService.login(param));
+    }
+
+    @ApiOperation("用户模块-获取用户信息")
+    @PostMapping("/v1/user/get-user-info")
+    @ApiRequest
+    public Result<UserEntity> getUserInfo(@RequestBody @Validated UserInfoParam param) {
+        return Result.Success(userInfoService.getUserInfo(param));
     }
 
     @ApiOperation("用户模块-获取用户手机号")

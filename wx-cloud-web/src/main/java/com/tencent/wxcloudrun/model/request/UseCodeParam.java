@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author tangsh
  * @date 2022/10/27
@@ -15,5 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UseCodeParam {
 
+    @NotNull(message = "code不能为空")
     private String code;
 }
