@@ -21,5 +21,6 @@ public class UserEntity extends BaseDO {
     private String province;
     private String city;
     private String mobile;
+    private String inviteCode;
 
 }

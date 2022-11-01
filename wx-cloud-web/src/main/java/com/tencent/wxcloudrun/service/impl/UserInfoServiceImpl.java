@@ -4,17 +4,28 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.client.WxUserClient;
 import com.tencent.wxcloudrun.dto.RawDataDO;
+import com.tencent.wxcloudrun.entity.AdsOrderEntity;
 import com.tencent.wxcloudrun.entity.UserEntity;
+import com.tencent.wxcloudrun.entity.UserInviteCodeEntity;
+import com.tencent.wxcloudrun.expection.BizException;
+import com.tencent.wxcloudrun.expection.ErrorCode;
+import com.tencent.wxcloudrun.repository.AdsOrderRepository;
+import com.tencent.wxcloudrun.repository.UserInviteCodeRepository;
 import com.tencent.wxcloudrun.repository.UserRepository;
 import com.tencent.wxcloudrun.request.UserCodeParam;
 import com.tencent.wxcloudrun.request.UserInfoParam;
 import com.tencent.wxcloudrun.request.UserLoginParam;
+import com.tencent.wxcloudrun.response.UserInfoResult;
 import com.tencent.wxcloudrun.service.UserInfoService;
 import com.tencent.wxcloudrun.utils.EncryptUtils;
 import com.tencent.wxcloudrun.utils.NonceUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author tangsh
@@ -29,6 +40,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     private WxUserClient wxUserClient;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserInviteCodeRepository inviteCodeRepository;
+    @Autowired
+    private AdsOrderRepository adsOrderRepository;
+
 
     @Override
     public JSONObject login(UserLoginParam param) {
@@ -41,6 +57,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserEntity user = userRepository.getOneByOpenId(openid);
         if (user == null) {
             insertOrUpdateDO.setToken(getToken());
+            insertOrUpdateDO.setInviteCode(param.getInviteCode());
             userRepository.save(insertOrUpdateDO);
             userInfo.put("token", insertOrUpdateDO.getToken());
         } else {
@@ -53,18 +70,54 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 
     @Override
-    public UserEntity getUserInfo(UserInfoParam param) {
-        return userRepository.getOneByToken(param.getToken());
+    public UserInfoResult getUserInfo(UserInfoParam param) {
+        UserEntity userEntity = userRepository.getOneByToken(param.getToken());
+        if (userEntity == null) {
+            throw new BizException(ErrorCode.BIZ_BREAK, "用户信息不存在!");
+        }
+        String openid = userEntity.getOpenid();
+        UserInfoResult result = new UserInfoResult();
+        BeanUtils.copyProperties(userEntity, result);
+        UserInviteCodeEntity inviteCodeEntity = inviteCodeRepository.getOneByOpenId(openid);
+        //若用户存在邀请码
+        if (inviteCodeEntity != null) {
+            List<UserEntity> inviteUserList = userRepository.queryByInviteCode(inviteCodeEntity.getInviteCode());
+            List<String> inviteUserOpenIdList = inviteUserList.stream().map(UserEntity::getOpenid).collect(Collectors.toList());
+            List<AdsOrderEntity> payOrderList = adsOrderRepository.queryByOpenIdList(inviteUserOpenIdList);
+            result.setInviteNum(inviteUserList.size());
+            result.setOrderPayNum(payOrderList.size());
+        }
+        return result;
+    }
+
+    @Override
+    public String createInviteCode(String openid) {
+        UserInviteCodeEntity inviteCodeEntity = inviteCodeRepository.getOneByOpenId(openid);
+        String inviteCode;
+        if (inviteCodeEntity == null) {
+            inviteCode = NonceUtil.createNonce(6);
+            UserInviteCodeEntity entity = new UserInviteCodeEntity();
+            entity.setInviteCode(inviteCode);
+            entity.setOpenid(openid);
+            inviteCodeRepository.save(entity);
+        } else {
+            inviteCode = inviteCodeEntity.getInviteCode();
+        }
+        return inviteCode;
     }
 
 
     @Override
-    public JSONObject getPhoneNum(UserCodeParam param) {
+    public JSONObject getPhoneNum(String openid, UserCodeParam param) {
+        UserEntity userEntity = userRepository.getOneByOpenId(openid);
+        if (userEntity == null) {
+            throw new BizException(ErrorCode.BIZ_BREAK, "用户信息不存在!");
+        }
         String code = param.getCode();
         JSONObject respJson = wxUserClient.getPhoneNum(code);
-
-        //TODO 查询用户信息
-        log.info("{}", respJson.toJSONString());
+        String phoneNum = respJson.getString("phoneNumber");
+        //获取手机号，更新用户信息.
+        userRepository.updateByOpenId(userEntity);
         return respJson;
     }
 

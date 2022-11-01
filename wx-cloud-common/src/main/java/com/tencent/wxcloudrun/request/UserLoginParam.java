@@ -24,4 +24,7 @@ public class UserLoginParam implements Serializable {
     private String encryptedData;
     @ApiModelProperty(value = "解密向量")
     private String iv;
+    @ApiModelProperty(value = "邀请码")
+    private String inviteCode;
+
 }

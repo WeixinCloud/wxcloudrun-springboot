@@ -5,6 +5,8 @@ import com.tencent.wxcloudrun.entity.AdsOrderEntity;
 import com.tencent.wxcloudrun.mapper.AdsOrderMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author tangsh
  * @date 2022/10/31
@@ -16,5 +18,11 @@ public class AdsOrderRepository extends BaseRepository<AdsOrderMapper, AdsOrderE
         LambdaQueryWrapper<AdsOrderEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(AdsOrderEntity::getOutTradeNo, outTradeNo);
         return this.getOne(wrapper);
+    }
+
+    public List<AdsOrderEntity> queryByOpenIdList(List<String> openidList) {
+        LambdaQueryWrapper<AdsOrderEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(AdsOrderEntity::getOpenid, openidList);
+        return this.list(wrapper);
     }
 }
