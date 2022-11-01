@@ -1,7 +1,7 @@
 package com.tencent.wxcloudrun.config;
 
 import com.tencent.wxcloudrun.expection.BizException;
-import com.tencent.wxcloudrun.model.response.Result;
+import com.tencent.wxcloudrun.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -8,13 +8,13 @@ import com.tencent.wxcloudrun.client.WxPayClient;
 import com.tencent.wxcloudrun.constants.AppConstant;
 import com.tencent.wxcloudrun.constants.CategoryEnum;
 import com.tencent.wxcloudrun.constants.WxEventEnum;
+import com.tencent.wxcloudrun.dto.Container;
+import com.tencent.wxcloudrun.dto.PageDTO;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.entity.AdsOrderLogEntity;
-import com.tencent.wxcloudrun.model.dto.Container;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.*;
 import com.tencent.wxcloudrun.repository.AdsInfoRepository;
 import com.tencent.wxcloudrun.repository.AdsOrderLogRepository;
+import com.tencent.wxcloudrun.request.*;
 import com.tencent.wxcloudrun.service.AdsInfoService;
 import com.tencent.wxcloudrun.utils.NonceUtil;
 import com.tencent.wxcloudrun.utils.PageUtils;
@@ -23,8 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * @author tangsh
@@ -47,11 +45,6 @@ public class AdsInfoServiceImpl implements AdsInfoService {
     private AdsInfoRepository adsInfoRepository;
     @Autowired
     private AdsOrderLogRepository adsOrderLogRepository;
-
-    @Override
-    public List<AdsInfoEntity> list() {
-        return adsInfoRepository.list();
-    }
 
     @Override
     public PageDTO<AdsInfoEntity> page(AdsPageParam param) {

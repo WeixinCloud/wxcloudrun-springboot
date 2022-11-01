@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.model.request;
+package com.tencent.wxcloudrun.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,17 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author tangsh
- * @date 2022/10/27
+ * @date 2022/10/31
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCodeParam {
+public class OrderDetailParam implements Serializable {
 
-    @NotNull(message = "code不能为空")
-    private String code;
+    @NotNull(message = "订单号不能为空")
+    private String outTradeNo;
+
 }

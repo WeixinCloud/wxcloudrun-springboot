@@ -3,11 +3,11 @@ package com.tencent.wxcloudrun.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
+import com.tencent.wxcloudrun.dto.PageDTO;
 import com.tencent.wxcloudrun.entity.AdsOrderEntity;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.OrderDetailParam;
-import com.tencent.wxcloudrun.model.request.OrderPageParam;
-import com.tencent.wxcloudrun.model.response.Result;
+import com.tencent.wxcloudrun.request.OrderDetailParam;
+import com.tencent.wxcloudrun.request.OrderPageParam;
+import com.tencent.wxcloudrun.response.Result;
 import com.tencent.wxcloudrun.service.OrderInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

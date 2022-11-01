@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.model.request;
+package com.tencent.wxcloudrun.request;
 
 import lombok.Data;
 
@@ -9,7 +9,6 @@ import java.io.Serializable;
  * @date 2022/10/30
  */
 @Data
-public class WxPayCloseParam implements Serializable {
-
+public class WxPayQueryParam implements Serializable {
     private String out_trade_no;
 }

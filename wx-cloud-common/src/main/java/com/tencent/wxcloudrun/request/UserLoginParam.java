@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.model.request;
+package com.tencent.wxcloudrun.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.model.request;
+package com.tencent.wxcloudrun.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdsDetailParam {
+public class UserCodeParam {
 
-    @NotNull(message = "广告id不能为空")
-    private Integer id;
+    @NotNull(message = "code不能为空")
+    private String code;
 }

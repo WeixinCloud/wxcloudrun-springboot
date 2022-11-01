@@ -2,7 +2,7 @@
 package com.tencent.wxcloudrun.utils;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
+import com.tencent.wxcloudrun.dto.PageDTO;
 
 /**
  * @author tangsh
@@ -10,7 +10,7 @@ import com.tencent.wxcloudrun.model.dto.PageDTO;
  */
 public class PageUtils {
 
-    public static <T> PageDTO<T> copy(IPage<T> page){
+    public static <T> PageDTO<T> copy(IPage<T> page) {
         PageDTO<T> pageDTO = new PageDTO<>();
         pageDTO.setPages(Long.valueOf(page.getPages()).intValue());
         pageDTO.setTotal(Long.valueOf(page.getTotal()).intValue());

@@ -1,10 +1,10 @@
 package com.tencent.wxcloudrun.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tencent.wxcloudrun.dto.PageDTO;
 import com.tencent.wxcloudrun.entity.AdsOrderEntity;
-import com.tencent.wxcloudrun.model.dto.PageDTO;
-import com.tencent.wxcloudrun.model.request.OrderDetailParam;
-import com.tencent.wxcloudrun.model.request.OrderPageParam;
+import com.tencent.wxcloudrun.request.OrderDetailParam;
+import com.tencent.wxcloudrun.request.OrderPageParam;
 
 /**
  * @author tangsh
