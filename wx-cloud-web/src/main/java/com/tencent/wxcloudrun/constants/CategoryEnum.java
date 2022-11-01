@@ -11,7 +11,7 @@ import lombok.Getter;
 public enum CategoryEnum {
 
     /**
-     * 交易方状态枚举
+     * 广告类目枚举
      */
     PARTY("PARTY", "日常聚会"),
     SOCIALLY("SOCIALLY", "公益活动"),
@@ -35,6 +35,6 @@ public enum CategoryEnum {
                 return eventEnum;
             }
         }
-        throw new BizException(500, "部门枚举异常");
+        throw new BizException(500501, "广告类目枚举异常");
     }
 }

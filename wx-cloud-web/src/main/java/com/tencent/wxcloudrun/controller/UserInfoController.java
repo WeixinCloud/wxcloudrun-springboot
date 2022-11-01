@@ -5,6 +5,7 @@ package com.tencent.wxcloudrun.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
 import com.tencent.wxcloudrun.model.request.UseCodeParam;
+import com.tencent.wxcloudrun.model.request.UseLoginParam;
 import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.UserInfoService;
 import io.swagger.annotations.Api;
@@ -28,6 +29,13 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @ApiOperation("用户模块-登录")
+    @PostMapping("/v1/user/login")
+    @ApiRequest
+    public Result<JSONObject> login(@RequestBody @Validated UseLoginParam param) {
+        return Result.Success(userInfoService.login(param));
+    }
 
     @ApiOperation("用户模块-获取用户手机号")
     @PostMapping("/v1/user/get-phone-num")

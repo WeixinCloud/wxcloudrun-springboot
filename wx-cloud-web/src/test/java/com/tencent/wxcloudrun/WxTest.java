@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun;
 
 import com.alibaba.fastjson.JSON;
+import com.tencent.wxcloudrun.client.WxUserClient;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.entity.AdsOrderEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
@@ -31,6 +32,10 @@ public class WxTest {
     @Autowired
     private OrderInfoService orderInfoService;
 
+    @Autowired
+    private WxUserClient wxUserClient;
+
+
     @Test
     public void test_query_ads_page() {
         int pageNo = 0;
@@ -48,6 +53,12 @@ public class WxTest {
         OrderPageParam param = OrderPageParam.builder().pageNo(pageNo).pageSize(pageSize).build();
         PageDTO<AdsOrderEntity> pageDTO = orderInfoService.page(openid, param);
         log.info("{}", JSON.toJSONString(pageDTO));
+    }
+
+    @Test
+    public void get_user_info() {
+        String code = "021F8j000lDgPO1u1D100IpFvr3F8j0I";
+        wxUserClient.login(code);
     }
 }
 

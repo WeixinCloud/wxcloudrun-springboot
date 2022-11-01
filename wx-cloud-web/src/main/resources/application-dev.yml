@@ -24,8 +24,3 @@ mybatis-plus:
       logic-delete-value: 0
       logic-not-delete-value: 1
   mapper-locations: classpath*:/mapper/*.xml
-
-log:
-  charset: UTF-8
-  level: INFO
-  path: ./logs
