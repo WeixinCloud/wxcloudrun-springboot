@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         JSONObject userInfo = new JSONObject();
         UserEntity user = userRepository.getOneByOpenId(openid);
         if (user == null) {
-            insertOrUpdateDO.setToken(getToken());
+            insertOrUpdateDO.setToken(NonceUtil.createNonce(32));
             insertOrUpdateDO.setInviteCode(param.getInviteCode());
             userRepository.save(insertOrUpdateDO);
             userInfo.put("token", insertOrUpdateDO.getToken());
@@ -75,19 +76,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userEntity == null) {
             throw new BizException(ErrorCode.BIZ_BREAK, "用户信息不存在!");
         }
-        String openid = userEntity.getOpenid();
-        UserInfoResult result = new UserInfoResult();
-        BeanUtils.copyProperties(userEntity, result);
-        UserInviteCodeEntity inviteCodeEntity = inviteCodeRepository.getOneByOpenId(openid);
-        //若用户存在邀请码
-        if (inviteCodeEntity != null) {
-            List<UserEntity> inviteUserList = userRepository.queryByInviteCode(inviteCodeEntity.getInviteCode());
-            List<String> inviteUserOpenIdList = inviteUserList.stream().map(UserEntity::getOpenid).collect(Collectors.toList());
-            List<AdsOrderEntity> payOrderList = adsOrderRepository.queryByOpenIdList(inviteUserOpenIdList);
-            result.setInviteNum(inviteUserList.size());
-            result.setOrderPayNum(payOrderList.size());
-        }
-        return result;
+        return buildUserInfoResult(userEntity);
     }
 
     @Override
@@ -117,6 +106,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         JSONObject respJson = wxUserClient.getPhoneNum(code);
         String phoneNum = respJson.getString("phoneNumber");
         //获取手机号，更新用户信息.
+        userEntity.setMobile(phoneNum);
         userRepository.updateByOpenId(userEntity);
         return respJson;
     }
@@ -144,8 +134,23 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userEntity;
     }
 
-    private String getToken() {
-        return NonceUtil.createNonce(32);
+    private UserInfoResult buildUserInfoResult(UserEntity userEntity) {
+        String openid = userEntity.getOpenid();
+        UserInfoResult result = new UserInfoResult();
+        BeanUtils.copyProperties(userEntity, result);
+        UserInviteCodeEntity inviteCodeEntity = inviteCodeRepository.getOneByOpenId(openid);
+        //若用户存在邀请码
+        if (inviteCodeEntity != null) {
+            List<UserEntity> inviteUserList = userRepository.queryByInviteCode(inviteCodeEntity.getInviteCode());
+            if (!CollectionUtils.isEmpty(inviteUserList)) {
+                List<String> inviteUserOpenIdList = inviteUserList.stream().map(UserEntity::getOpenid).collect(Collectors.toList());
+                List<AdsOrderEntity> payOrderList = adsOrderRepository.queryByOpenIdList(inviteUserOpenIdList);
+                result.setInviteNum(inviteUserList.size());
+                result.setOrderPayNum(payOrderList.size());
+            }
+        }
+        return result;
     }
+
 
 }
