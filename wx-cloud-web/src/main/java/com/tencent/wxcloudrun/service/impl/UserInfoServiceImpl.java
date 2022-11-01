@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.client.WxUserClient;
 import com.tencent.wxcloudrun.entity.UserEntity;
 import com.tencent.wxcloudrun.model.dto.RawDataDO;
-import com.tencent.wxcloudrun.model.request.UseCodeParam;
+import com.tencent.wxcloudrun.model.request.UserCodeParam;
 import com.tencent.wxcloudrun.model.request.UserInfoParam;
-import com.tencent.wxcloudrun.model.request.UseLoginParam;
+import com.tencent.wxcloudrun.model.request.UserLoginParam;
 import com.tencent.wxcloudrun.repository.UserRepository;
 import com.tencent.wxcloudrun.service.UserInfoService;
 import com.tencent.wxcloudrun.utils.EncryptUtils;
@@ -31,7 +31,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserRepository userRepository;
 
     @Override
-    public JSONObject login(UseLoginParam param) {
+    public JSONObject login(UserLoginParam param) {
         String code = param.getCode();
         JSONObject respJson = wxUserClient.login(code);
         String sessionKey = respJson.get("session_key").toString();
@@ -59,7 +59,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 
     @Override
-    public JSONObject getPhoneNum(UseCodeParam param) {
+    public JSONObject getPhoneNum(UserCodeParam param) {
         String code = param.getCode();
         JSONObject respJson = wxUserClient.getPhoneNum(code);
 
@@ -68,7 +68,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return respJson;
     }
 
-    private UserEntity buildUserEntity(UseLoginParam param, String sessionKey, String openid) {
+    private UserEntity buildUserEntity(UserLoginParam param, String sessionKey, String openid) {
         UserEntity userEntity = new UserEntity();
         userEntity.setOpenid(openid);
         if (param.getRawData() != null) {

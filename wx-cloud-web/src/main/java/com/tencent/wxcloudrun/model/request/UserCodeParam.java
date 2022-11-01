@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UseCodeParam {
+public class UserCodeParam {
 
     @NotNull(message = "code不能为空")
     private String code;

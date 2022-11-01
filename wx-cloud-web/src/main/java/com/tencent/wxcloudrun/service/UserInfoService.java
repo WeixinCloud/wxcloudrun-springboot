@@ -2,9 +2,9 @@ package com.tencent.wxcloudrun.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.entity.UserEntity;
-import com.tencent.wxcloudrun.model.request.UseCodeParam;
+import com.tencent.wxcloudrun.model.request.UserCodeParam;
 import com.tencent.wxcloudrun.model.request.UserInfoParam;
-import com.tencent.wxcloudrun.model.request.UseLoginParam;
+import com.tencent.wxcloudrun.model.request.UserLoginParam;
 
 /**
  * @author tangsh
@@ -13,9 +13,9 @@ import com.tencent.wxcloudrun.model.request.UseLoginParam;
 
 public interface UserInfoService {
 
-    JSONObject login(UseLoginParam param);
+    JSONObject login(UserLoginParam param);
 
-    JSONObject getPhoneNum(UseCodeParam param);
+    JSONObject getPhoneNum(UserCodeParam param);
 
     UserEntity getUserInfo(UserInfoParam param);
 }

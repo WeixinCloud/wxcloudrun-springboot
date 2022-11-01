@@ -1,14 +1,17 @@
 package com.tencent.wxcloudrun;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.client.WxUserClient;
 import com.tencent.wxcloudrun.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.entity.AdsOrderEntity;
 import com.tencent.wxcloudrun.model.dto.PageDTO;
 import com.tencent.wxcloudrun.model.request.AdsPageParam;
 import com.tencent.wxcloudrun.model.request.OrderPageParam;
+import com.tencent.wxcloudrun.model.request.UserLoginParam;
 import com.tencent.wxcloudrun.service.AdsInfoService;
 import com.tencent.wxcloudrun.service.OrderInfoService;
+import com.tencent.wxcloudrun.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +34,8 @@ public class WxTest {
     private AdsInfoService adsInfoService;
     @Autowired
     private OrderInfoService orderInfoService;
-
     @Autowired
-    private WxUserClient wxUserClient;
+    private UserInfoService userInfoService;
 
 
     @Test
@@ -57,8 +59,11 @@ public class WxTest {
 
     @Test
     public void get_user_info() {
-        String code = "021F8j000lDgPO1u1D100IpFvr3F8j0I";
-        wxUserClient.login(code);
+        String msg = "{\"code\":\"041tVGFa1LRKaE0JjJIa1n5QyX1tVGFi\",\"iv\":\"uAxz60obe+xAHakCJkOvAw==\",\"encryptedData\":\"BKyCdVKPBQxYqiii1SCWR3NcFyAfkMYh6lyJ7RGPTk0l0rbWiLwsevBAHfqH7ey0WeEzB2+wb20ta1dlIlUv87Qz5RZmuxlc5mSGl9kKd42zI/PNt1gaArjIkpwQND6f1mLGS24fHszAn3B92tOZYk/OVN/3gjNUIv9Yl077UFpx0Z8TdAU/mNfoKMHBwxkSn4Fpf8GJHOQQ0X79Ej0bp77uUsYBtZtPj4wVZ5cPbAAzMfzDWXV8hzmhe7bFUicrRuaASmiDpokWF+/EEpYii2PsX5itUyKtJUtQ41gymjBbLwqCeXTAvvDI3DqH+h4rg9ZtpY6ss0WG5OVnLrOUh+QIhXSrPVahCQddel/2OUorc9OpX+GSb+JmfhVtFiKwGaJboeF/kyRT81w12iJSAg==\",\"signature\":\"a3946f98bff3138e25934440b0d6ee6cf75ec606\",\"rawData\":\"{\\\"nickName\\\":\\\"铭\\\",\\\"gender\\\":0,\\\"language\\\":\\\"zh_CN\\\",\\\"city\\\":\\\"\\\",\\\"province\\\":\\\"\\\",\\\"country\\\":\\\"\\\",\\\"avatarUrl\\\":\\\"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKeQj8NaUBPGkrS0ricGiccRC2JtARwU6vbbeOtQWI1naicNqxL7icHBD4x2iaEV9wicRcWwRBpdo7pxKFA/132\\\"}\"}";
+        UserLoginParam param = JSONObject.parseObject(msg,UserLoginParam.class);
+        userInfoService.login(param);
     }
+
+
 }
 

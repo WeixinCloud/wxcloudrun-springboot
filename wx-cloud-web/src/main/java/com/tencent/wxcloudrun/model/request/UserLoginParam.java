@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 2022/10/30
  */
 @Data
-public class UseLoginParam implements Serializable {
+public class UserLoginParam implements Serializable {
 
     @NotNull(message = "code不能为空")
     @ApiModelProperty(value = "微信code", required = true)

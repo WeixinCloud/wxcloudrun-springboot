@@ -5,8 +5,8 @@ package com.tencent.wxcloudrun.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.annotation.ApiRequest;
 import com.tencent.wxcloudrun.entity.UserEntity;
-import com.tencent.wxcloudrun.model.request.UseCodeParam;
-import com.tencent.wxcloudrun.model.request.UseLoginParam;
+import com.tencent.wxcloudrun.model.request.UserCodeParam;
+import com.tencent.wxcloudrun.model.request.UserLoginParam;
 import com.tencent.wxcloudrun.model.request.UserInfoParam;
 import com.tencent.wxcloudrun.model.response.Result;
 import com.tencent.wxcloudrun.service.UserInfoService;
@@ -34,7 +34,7 @@ public class UserInfoController {
     @ApiOperation("用户模块-登录")
     @PostMapping("/v1/user/login")
     @ApiRequest
-    public Result<JSONObject> login(@RequestBody @Validated UseLoginParam param) {
+    public Result<JSONObject> login(@RequestBody @Validated UserLoginParam param) {
         return Result.Success(userInfoService.login(param));
     }
 
@@ -48,7 +48,7 @@ public class UserInfoController {
     @ApiOperation("用户模块-获取用户手机号")
     @PostMapping("/v1/user/get-phone-num")
     @ApiRequest
-    public Result<JSONObject> getPhoneNum(@RequestBody @Validated UseCodeParam param) {
+    public Result<JSONObject> getPhoneNum(@RequestBody @Validated UserCodeParam param) {
         return Result.Success(userInfoService.getPhoneNum(param));
     }
 }
