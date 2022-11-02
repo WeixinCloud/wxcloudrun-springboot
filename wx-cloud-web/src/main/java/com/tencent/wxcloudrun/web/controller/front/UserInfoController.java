@@ -1,6 +1,6 @@
 
 
-package com.tencent.wxcloudrun.web.controller;
+package com.tencent.wxcloudrun.web.controller.front;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.common.annotation.ApiRequest;

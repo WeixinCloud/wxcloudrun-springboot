@@ -1,15 +1,15 @@
 
-package com.tencent.wxcloudrun.admin.controller;
+package com.tencent.wxcloudrun.web.controller.admin;
 
 import com.tencent.wxcloudrun.common.annotation.ApiRequest;
 import com.tencent.wxcloudrun.common.dto.PageDTO;
-import com.tencent.wxcloudrun.dao.entity.AdsInfoEntity;
 import com.tencent.wxcloudrun.common.request.AdsBaseParam;
 import com.tencent.wxcloudrun.common.request.AdsCreateParam;
 import com.tencent.wxcloudrun.common.request.AdsEditParam;
 import com.tencent.wxcloudrun.common.request.AdsPageParam;
 import com.tencent.wxcloudrun.common.response.Result;
-import com.tencent.wxcloudrun.admin.server.AdminAdsInfoServer;
+import com.tencent.wxcloudrun.dao.entity.AdsInfoEntity;
+import com.tencent.wxcloudrun.web.service.AdminAdsInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminAdsInfoController {
 
     @Autowired
-    private AdminAdsInfoServer adsInfoService;
+    private AdminAdsInfoService adsInfoService;
 
     @ApiOperation("广告后台-分页")
     @PostMapping("/v1/ads/page")
@@ -46,7 +46,7 @@ public class AdminAdsInfoController {
         return Result.Success(adsInfoService.detail(param));
     }
 
-    @ApiOperation("广告后台-状态")
+    @ApiOperation("广告后台-上架")
     @PostMapping("/v1/ads/status-on")
     @ApiRequest
     public Result<Void> statusOn(@RequestBody @Validated AdsBaseParam param) {
@@ -54,7 +54,7 @@ public class AdminAdsInfoController {
         return Result.Success();
     }
 
-    @ApiOperation("广告后台-状态")
+    @ApiOperation("广告后台-下架")
     @PostMapping("/v1/ads/status-off")
     @ApiRequest
     public Result<Void> statusOff(@RequestBody @Validated AdsBaseParam param) {
@@ -62,7 +62,7 @@ public class AdminAdsInfoController {
         return Result.Success();
     }
 
-    @ApiOperation("广告后台-编辑")
+    @ApiOperation("广告后台-创建")
     @PostMapping("/v1/ads/create")
     @ApiRequest
     public Result<Void> edit(@RequestBody @Validated AdsCreateParam param) {
