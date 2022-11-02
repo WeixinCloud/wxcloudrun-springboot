@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 2022/10/30
  */
 @Data
-public class WxPayCloseParam implements Serializable {
+public class WxRefundParam implements Serializable {
 
     @NotNull(message = "微信支付订单号不能为空")
     @ApiModelProperty(value = "微信支付订单号", required = true)

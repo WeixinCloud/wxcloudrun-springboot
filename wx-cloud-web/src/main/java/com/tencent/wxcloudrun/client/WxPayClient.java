@@ -18,6 +18,8 @@ public class WxPayClient {
 
     @Value("${wx.cloud.created.order.url:http://api.weixin.qq.com/_/pay/unifiedorder}")
     public String WX_CLOUD_PRE_ORDER_URL;
+    @Value("${wx.cloud.created.order.url:http://api.weixin.qq.com/_/pay/refund}")
+    public String WX_CLOUD_REFUND_ORDER_URL;
     @Value("${wx.cloud.query.order.url:http://api.weixin.qq.com/_/pay/queryorder}")
     public String WX_CLOUD_QUERY_ORDER_URL;
     @Value("${wx.cloud.close.order.url:http://api.weixin.qq.com/_/pay/closeorder}")
@@ -26,6 +28,15 @@ public class WxPayClient {
 
     public JSONObject prePay(JSONObject reqJson) {
         String response = HttpRequest.post(WX_CLOUD_PRE_ORDER_URL)
+                .header(HttpRequest.HEADER_CONTENT_TYPE, HttpRequest.CONTENT_TYPE_JSON)
+                .send(reqJson.toJSONString())
+                .body();
+        log.info("请求:{},响应:{}", reqJson.toJSONString(), response);
+        return WxUtils.getData(response);
+    }
+
+    public JSONObject refund(JSONObject reqJson) {
+        String response = HttpRequest.post(WX_CLOUD_REFUND_ORDER_URL)
                 .header(HttpRequest.HEADER_CONTENT_TYPE, HttpRequest.CONTENT_TYPE_JSON)
                 .send(reqJson.toJSONString())
                 .body();

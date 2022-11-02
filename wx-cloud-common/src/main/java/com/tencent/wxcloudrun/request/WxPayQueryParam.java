@@ -1,7 +1,9 @@
 package com.tencent.wxcloudrun.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -10,5 +12,8 @@ import java.io.Serializable;
  */
 @Data
 public class WxPayQueryParam implements Serializable {
-    private String out_trade_no;
+
+    @NotNull(message = "微信支付订单号不能为空")
+    @ApiModelProperty(value = "微信支付订单号", required = true)
+    private String outTradeNo;
 }

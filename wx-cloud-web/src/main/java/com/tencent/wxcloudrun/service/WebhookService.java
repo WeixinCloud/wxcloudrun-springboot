@@ -10,4 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 public interface WebhookService {
 
     JSONObject respWxPayHook(JSONObject req);
+
+    JSONObject respWxRefundHook(JSONObject req);
 }

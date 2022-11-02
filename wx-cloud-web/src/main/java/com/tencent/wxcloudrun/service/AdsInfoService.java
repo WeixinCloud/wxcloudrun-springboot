@@ -18,6 +18,8 @@ public interface AdsInfoService {
 
     JSONObject prePay(String openid, String ip, WxPrePayParam param);
 
+    JSONObject refund(String openid, WxRefundParam param);
+
     JSONObject payQuery(String openid, WxPayQueryParam param);
 
     JSONObject payClose(String openid, WxPayCloseParam param);

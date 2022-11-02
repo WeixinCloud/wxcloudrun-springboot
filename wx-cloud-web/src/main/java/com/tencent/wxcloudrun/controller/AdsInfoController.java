@@ -51,10 +51,19 @@ public class AdsInfoController {
         return Result.Success(result);
     }
 
+    @ApiOperation("广告订单-退款申请")
+    @PostMapping("/v1/ads/refund")
+    @ApiRequest
+    public Result<JSONObject> refund(@RequestHeader("x-wx-openid") String openid,
+                                     @RequestBody @Validated WxRefundParam param) {
+        JSONObject result = adsInfoService.refund(openid, param);
+        return Result.Success(result);
+    }
+
     @ApiOperation("广告订单-查询")
     @PostMapping("/v1/ads/pay-query")
     @ApiRequest
-    public Result<JSONObject> payQuery(@RequestHeader("x-wx-openid") String openid, @RequestBody WxPayQueryParam param) {
+    public Result<JSONObject> payQuery(@RequestHeader("x-wx-openid") String openid, @RequestBody @Validated WxPayQueryParam param) {
         JSONObject result = adsInfoService.payQuery(openid, param);
         return Result.Success(result);
     }
@@ -62,7 +71,7 @@ public class AdsInfoController {
     @ApiOperation("广告订单-关闭")
     @PostMapping("/v1/ads/pay-close")
     @ApiRequest
-    public Result<JSONObject> payClose(@RequestHeader("x-wx-openid") String openid, @RequestBody WxPayCloseParam param) {
+    public Result<JSONObject> payClose(@RequestHeader("x-wx-openid") String openid, @RequestBody @Validated WxPayCloseParam param) {
         JSONObject result = adsInfoService.payClose(openid, param);
         return Result.Success(result);
     }
