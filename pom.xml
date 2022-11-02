@@ -25,6 +25,7 @@
         <module>wx-cloud-dao</module>
         <module>wx-cloud-web</module>
         <module>wx-cloud-common</module>
+        <module>wx-cloud-admin</module>
     </modules>
 
     <!-- 属性说明 -->
