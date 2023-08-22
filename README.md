@@ -27,8 +27,8 @@
 ├── LICENSE                         LICENSE 文件
 ├── README.md                       README 文件
 ├── container.config.json           模板部署「服务设置」初始化配置（二开请忽略）
-├── mvnw                            mvnw 文件，处理mevan版本兼容问题
-├── mvnw.cmd                        mvnw.cmd 文件，处理mevan版本兼容问题
+├── mvnw                            mvnw 文件，处理maven版本兼容问题
+├── mvnw.cmd                        mvnw.cmd 文件，处理maven版本兼容问题
 ├── pom.xml                         pom.xml文件
 ├── settings.xml                    maven 配置文件
 ├── springboot-cloudbaserun.iml     项目配置文件
