@@ -15,3 +15,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
+
+logging:
+  level:
+    com.tencent.wxcloudrun: DEBUG
