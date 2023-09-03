@@ -23,10 +23,10 @@ public class LoginController {
 
     private static final String authUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code";
 
-    @Value("wechat.app-secret")
+    @Value("${wechat.app-secret}")
     private String appSecret;
 
-    @Value("wechat.app-id")
+    @Value("${wechat.app-id}")
     private String appId;
 
     @PostMapping(value = "/login")
