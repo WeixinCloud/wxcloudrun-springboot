@@ -19,3 +19,7 @@ mybatis:
 logging:
   level:
     com.tencent.wxcloudrun: DEBUG
+
+  wechat:
+    app-id: ${wechat.app-id}
+    app-secret: ${wechat.app-secret}
