@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun;
 
+import com.tencent.wxcloudrun.http.MyHttpConverter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +13,9 @@ public class WxCloudRunApplication {
 
   @Bean
   public RestTemplate restTemplate() {
-    return new RestTemplate();
+    RestTemplate template = new RestTemplate();
+    template.getMessageConverters().add(new MyHttpConverter());
+    return template;
   }
 
   public static void main(String[] args) {
