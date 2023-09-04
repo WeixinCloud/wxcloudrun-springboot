@@ -35,8 +35,9 @@ public class LoginController {
         log.debug("WXLogin, appid={}, code={}", appId, request.getWxcode());
 
         ResponseEntity<WXLoginResponse> wxResponse = restTemplate.getForEntity(String.format(authUrl, appId, appSecret, request.getWxcode()), WXLoginResponse.class);
+        log.debug("WxLogin response: {}", wxResponse);
         if(wxResponse.getStatusCode().is2xxSuccessful()) {
-            String openid = wxResponse.getBody().openid;
+            String openid = wxResponse.getBody().getOpenid();
             LoginResponse res = new LoginResponse();
             res.setOpenid(openid);
             return res;
