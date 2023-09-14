@@ -23,3 +23,4 @@ logging:
   wechat:
     app-id: ${wechat.app-id}
     app-secret: ${wechat.app-secret}
+  OpenAIAuth: ${OpenAIAuth}
