@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.wxcloudrun.dto.ChatRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,9 @@ import java.util.UUID;
 @Slf4j
 public class ChatController {
 
+    @Value("${OpenAIAuth:abc}")
+    private String auth;
+
     @PostMapping(value = "/chat")
     public String chat(@RequestBody ChatRequest request) {
 
@@ -26,7 +30,7 @@ public class ChatController {
         // 设置请求头
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", request.getToken());
+        headers.set("Authorization", auth);
 
         // 创建请求体
         String jsonBody = "{ \"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + request.getUser() + "\"}], \"temperature\": 0.7 }";
