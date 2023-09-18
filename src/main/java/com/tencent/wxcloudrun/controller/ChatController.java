@@ -33,7 +33,7 @@ public class ChatController {
         headers.set("Authorization", auth);
 
         // 创建请求体
-        String jsonBody = "{ \"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + request.getUser() + "\"}], \"temperature\": 0.7 }";
+        String jsonBody = "{ \"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + request.getUser() + "\"}], \"temperature\": 0.7, \"max_tokens\": 255 }";
 
         // 创建HTTP请求实体
         HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
@@ -50,10 +50,10 @@ public class ChatController {
             JsonNode root = objectMapper.readTree(response.getBody());
             JsonNode contentNode = root.at("/choices/0/message/content");
             String content = contentNode.asText();
-            return "Server Reply: " + content;
+            return content;
         } catch (Exception e) {
             log.error("error", e);
         }
-        return "Server Reply: Hello GPT!";
+        return "多情自古空余恨，此恨绵绵无绝期。";
     }
 }
