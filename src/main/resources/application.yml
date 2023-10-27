@@ -15,3 +15,12 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
+
+logging:
+  level:
+    com.tencent.wxcloudrun: DEBUG
+
+  wechat:
+    app-id: ${wechat.app-id}
+    app-secret: ${wechat.app-secret}
+  OpenAIAuth: ${OpenAIAuth}
