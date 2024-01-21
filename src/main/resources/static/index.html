@@ -69,6 +69,15 @@
       color: #000000;
     }
 
+
+    .name {
+      align-self: flex-start;
+      opacity: 0.9;
+      font-weight: 500;
+      font-size: 14px;
+      color: #000000;
+    }
+
     .count-reset {
       color: #576b95;
       cursor: pointer;
@@ -215,6 +224,11 @@
         <span class="count-number"></span>
         <span class="count-reset" onclick="set('clear')">清零</span>
       </span>
+      <span class="count-text">
+        <span style="margin-right: 16px;">名称:</span>
+        <span class="name"></span>
+        <span class="count-reset" onclick="getName()">get name</span>
+      </span>
       <a class="btn btn-success btn-lg count-button" style="background: #07c160; border: 0"
         onclick="set('inc')">计数+1</a>
       <div class="card" style="width: 320px; margin-bottom: 48px;">
@@ -232,8 +246,8 @@
           <a class="btn btn-light btn-lg link-button" style="border: 0; box-shadow: none; margin-right: 12px;"
             href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/basic/intro.html" target="_blank"
             rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-              height="24px" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                 height="24px" viewBox="0 0 24 24">
               <title>icons_outline_warrant copy</title>
               <g id="icons_outline_warrant-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g id="0.&#x56FE;&#x6807;/&#x7EBF;&#x578B;/icons_outlined_copy">
@@ -248,8 +262,8 @@
           <a class="btn btn-light btn-lg link-button" style="border: 0; box-shadow: none;"
             href="https://developers.weixin.qq.com/community/business/course/00068c2c0106c0667f5b01d015b80d"
             target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-              height="24px" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                 height="24px" viewBox="0 0 24 24">
               <title>icons_outlined_play</title>
               <g id="&#x573A;&#x666F;&#x5316;&#x90E8;&#x7F72;" stroke="none" stroke-width="1" fill="none"
                 fill-rule="evenodd">
@@ -292,6 +306,16 @@
     }).done(function (res) {
       if (res && res.data !== undefined) {
         $(".count-number").html(res.data);
+      }
+    });
+  }
+
+   function getName() {
+    $.ajax("/name", {
+      method: "get",
+    }).done(function (res) {
+      if (res && res.data !== undefined) {
+        $(".name").html(res.data);
       }
     });
   }
