@@ -80,4 +80,14 @@ public class CounterController {
     }
   }
   
+  /**
+   * 测试接口
+   * @return API response json
+   */
+  @GetMapping(value = "/api/test")
+  ApiResponse get() {
+    logger.info("/api/test get request");
+
+    return ApiResponse.ok('测试接口调用成功！');
+  }
 }
