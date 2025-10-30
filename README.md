@@ -3,7 +3,7 @@
 ![GitHub package.json dependency version (prod)](https://img.shields.io/badge/maven-3.6.0-green)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/badge/jdk-11-green)
 
-微信云托管 Java Springboot 框架模版，实现简单的计数器读写接口，使用云托管 MySQL 读写、记录计数值。
+微信云托管 Java Springboot 框架模板，实现简单的计数器读写接口，使用云托管 MySQL 读写、记录计数值。
 
 ![](https://qcloudimg.tencent-cloud.cn/raw/be22992d297d1b9a1a5365e606276781.png)
 
